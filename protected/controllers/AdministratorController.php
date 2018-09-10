@@ -196,13 +196,13 @@ class AdministratorController extends Controller
 		$status = Statusresumes::model()->findAll();
 		$total = 0;
 		foreach ($status as $key) {
-			$total+=$key->count;
+			$total+=count($key->resumes);
 		}
 		foreach ($status as $key) {
 			$dataset1[] = array(
-				"value"=>($key->count/$total) * 100,
+				"value"=>(count($key->resumes)/$total) * 100,
 				"color"=>$this->colorState($key->state),
-				"label"=>$key->state." ".round((($key->count/$total) * 100),2)."%"
+				"label"=>$key->state." ".round(((count($key->resumes)/$total) * 100),2)."%"
 			);
 		}
 
@@ -220,7 +220,7 @@ class AdministratorController extends Controller
 			foreach ($countries as $country) {
 				$totalCountry = 0;
 				foreach ($country->cities as $city) {
-					$totalCountry+=$city->count;
+					$totalCountry+=count($city->resumes);
 				}
 				$totalRegion+=$totalCountry;
 			}
