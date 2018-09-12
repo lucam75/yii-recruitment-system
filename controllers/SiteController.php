@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Employees;
 
 class SiteController extends Controller
 {
@@ -75,16 +76,17 @@ class SiteController extends Controller
         {
             $model->attributes=$_POST['LoginForm'];
             if($model->validate() && $model->login()){
-                $user_id = Yii::$app->user->identity->id;
-                print_r(Yii::$app->authManager->getRolesByUser($user_id));
-                // switch (Yii::app()->user->userrol) {
-                //     case 'Admin':
-                //         $this->redirect("Administrator/Changelog");
-                //         break;
-                //     case 'Recruiter':
-                //         $this->redirect("Company/index");
-                //         break;
-                // }
+                $employee = new Employees();
+                $loggedEmployee = $employee->findById(Yii::$app->user->id);
+                $loggedUserRole = $loggedEmployee->rolesIdRol->name;
+                switch ($loggedUserRole) {
+                    case 'Admin':
+                        $this->redirect("Administrator/Changelog");
+                        break;
+                    case 'Recruiter':
+                        $this->redirect("Company/index");
+                        break;
+                }
             }else{
                 echo "NO VALID";
             }

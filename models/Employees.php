@@ -81,7 +81,7 @@ class Employees extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
     }
 
     public function getId(){
-        return "hi =)";
+        return $this->idEmployee;
     }
  
     public function getIdEmployee(){
@@ -97,6 +97,9 @@ class Employees extends \yii\db\ActiveRecord implements \yii\web\IdentityInterfa
     }
     public static function findByUsername($login){
         return self::findOne(['login'=>$login]);
+    }
+    public static function findById($id){
+        return self::findOne(['idEmployee'=>$id]);
     }
  
     public function validatePassword($pass){
