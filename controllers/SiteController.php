@@ -81,10 +81,10 @@ class SiteController extends Controller
                 $loggedUserRole = $loggedEmployee->rolesIdRol->name;
                 switch ($loggedUserRole) {
                     case 'Admin':
-                        $this->redirect("Administrator/Changelog");
+                        $this->redirect("administrator/changelog");
                         break;
                     case 'Recruiter':
-                        $this->redirect("Company/index");
+                        $this->redirect("company/index");
                         break;
                 }
             }else{

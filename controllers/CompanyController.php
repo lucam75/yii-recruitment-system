@@ -7,10 +7,12 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use app\models\Resumes;
+use yii\data\ActiveDataProvider;
 
 class CompanyController extends Controller
 {
-	public $layout='company';
+	public $layout='column2';
 
     /**
      * {@inheritdoc}
@@ -36,9 +38,9 @@ class CompanyController extends Controller
                 ],
             ],
         ];
-    }
+	}
 
-	public function actionManageResume(){
+	/*public function actionManageResume(){
 		if(isset($_POST["action"])){
 			$action = $_POST["action"];
 			$model = $this->loadModel(Yii::app()->session['idResume']);
@@ -115,61 +117,68 @@ class CompanyController extends Controller
 
 			$mPDF1->Output();
 // $this->render('view',array('model'=>$this->loadModel(Yii::app()->session['idResume'])));
-	}
-	public function actionView()
+	}*/
+	/*public function actionView()
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel(Yii::app()->session['idResume'])
 		));
-	}
+	}*/
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	/*public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-	}
+	}*/
 
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
-		$criteria=new CDbCriteria;
-		$criteria->compare('statusResumes_idStatusResume','1');
-		$resumes = Resumes::model()->findAll($criteria);
-		Yii::app()->session['newsResumes'] = count($resumes);
-		$dataprovider =  new CArrayDataProvider($resumes, array(
-	    	'keyField'=>'idResume',
-		    'sort'=>array(
-		    	'defaultOrder'=>'dateApplication ASC',
-		        'attributes'=>array(
-		        	'dateApplication',
-		            'state'=>array(
-		                'asc'=>'statusResumesIdStatusResume.state',
-		                'desc'=>'statusResumesIdStatusResume.state desc',
-		            ),
-		            'applicant'=>array(
-		                'asc'=>'firstName',
-		                'desc'=>'firstName desc',
-	            	),
-	            ),
-            ),
-            'pagination'=>array(
+		$searchModel = new Resumes();
+		//$resumes = Resumes::find(['statusResumes_idStatusResume'=>'1'])->all();
+		$query = Resumes::find()->where(['statusResumes_idStatusResume'=>'1']);
+		
+		$dataProvider =  new ActiveDataProvider([
+			'query' => $query,
+            'pagination'=>[
             	'pageSize'=>10
-			),
-		));
-		$this->render('index',array(
-			'dataprovider'=>$dataprovider,
+			],
+		]);
+
+		$dataProvider->setSort([
+			'attributes' => [
+				'statusResumes_idStatusResume' => [
+					'asc' => ['statusResumes_idStatusResume' => SORT_ASC],
+					'desc' => ['statusResumes_idStatusResume' => SORT_DESC],
+					'default' => SORT_ASC
+				],
+				'firstName' => [
+					'asc' => ['firstName' => SORT_ASC],
+					'desc' => ['firstName' => SORT_DESC],
+					'default' => SORT_ASC,
+				],
+				'dateApplication' => [
+					'asc' => ['dateApplication' => SORT_ASC],
+					'desc' => ['dateApplication' => SORT_DESC],
+					'default' => SORT_ASC,
+				]
+			],
+		]);
+
+		return $this->render('index',array(
+			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
 	}
-public function actionArchived()
+	/*public function actionArchived()
 	{
 		$criteria=new CDbCriteria;
 		$criteria->addCondition('statusResumes_idStatusResume != 1');
@@ -288,7 +297,7 @@ public function actionArchived()
 		echo $this->renderPartial('_gridArchived',array(
 			'dataprovider'=>$dataprovider,
 		),true);
-	}
+	}*/
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -296,24 +305,24 @@ public function actionArchived()
 	 * @return Resumes the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	/*public function loadModel($id)
 	{
 		$model=Resumes::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
-	}
+	}*/
 
 	/**
 	 * Performs the AJAX validation.
 	 * @param Resumes $model the model to be validated
 	 */
-	protected function performAjaxValidation($model)
+	/*protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='resumes-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-	}
+	}*/
 }
