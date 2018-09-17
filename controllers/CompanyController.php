@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
 
 class CompanyController extends Controller
 {
-	public $layout='column2';
+	public $layout='company-layout';
 
     /**
      * {@inheritdoc}
@@ -144,67 +144,54 @@ class CompanyController extends Controller
 	public function actionIndex()
 	{
 		$searchModel = new Resumes();
-		//$resumes = Resumes::find(['statusResumes_idStatusResume'=>'1'])->all();
 		$query = Resumes::find()->where(['statusResumes_idStatusResume'=>'1']);
 		
-		$dataProvider =  new ActiveDataProvider([
-			'query' => $query,
-            'pagination'=>[
-            	'pageSize'=>10
-			],
-		]);
-
-		$dataProvider->setSort([
-			'attributes' => [
-				'statusResumes_idStatusResume' => [
-					'asc' => ['statusResumes_idStatusResume' => SORT_ASC],
-					'desc' => ['statusResumes_idStatusResume' => SORT_DESC],
-					'default' => SORT_ASC
-				],
-				'firstName' => [
-					'asc' => ['firstName' => SORT_ASC],
-					'desc' => ['firstName' => SORT_DESC],
-					'default' => SORT_ASC,
-				],
-				'dateApplication' => [
-					'asc' => ['dateApplication' => SORT_ASC],
-					'desc' => ['dateApplication' => SORT_DESC],
-					'default' => SORT_ASC,
-				]
-			],
-		]);
+		$dataProvider = $this->GenerateResumesDataProvider($query);
 
 		return $this->render('index',array(
 			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
 	}
-	/*public function actionArchived()
+	public function actionArchived()
 	{
-		$criteria=new CDbCriteria;
-		$criteria->addCondition('statusResumes_idStatusResume != 1');
-		$resumes = Resumes::model()->findAll($criteria);
-		$dataprovider =  new CArrayDataProvider($resumes, array(
-	    	'keyField'=>'idResume',
-		    'sort'=>array(
-		    	'defaultOrder'=>'dateApplication ASC',
-		        'attributes'=>array(
-		        	'dateApplication',
-		            'state'=>array(
-		                'asc'=>'statusResumesIdStatusResume.state',
-		                'desc'=>'statusResumesIdStatusResume.state desc',
-		            ),
-		            'applicant'=>array(
-		                'asc'=>'firstName',
-		                'desc'=>'firstName desc',
-	            	),
-	            ),
-            ),
-            'pagination'=>array(
-            	'pageSize'=>10
-			),
-		));
-		$this->render('archived',array(
-			'dataprovider'=>$dataprovider,
+		$request = Yii::$app->request;
+		$searchModel = new Resumes();
+		$query = Resumes::find()->where(['<>','statusResumes_idStatusResume','1']);
+
+		if ($request->isPost){
+			if($request->post('daterange')){
+				$dates = explode('to',$_POST['daterange']);
+				$dates[0] = str_replace('/', '-', $dates[0]);
+				$dates[1] = str_replace('/', '-', $dates[1]);
+				$dateStart = date('Y-m-d H:i:s', strtotime(trim($dates[0])));
+				$dateEnd = date('Y-m-d H:i:s', strtotime(trim($dates[1])));
+				$query->andWhere(['BETWEEN', "dateApplication", $dateStart, $dateEnd]);
+			}
+			if($request->post('keyword')){
+				$keyword = $_POST['keyword'];
+				$query->andWhere(['or',
+					['LIKE', 'suffix', $keyword],
+					['LIKE', 'firstName', $keyword],
+					['LIKE', 'middleName', $keyword],
+					['LIKE', 'lastName', $keyword]
+				]);
+			}
+	
+			$states = '';
+			if($request->post('States')){
+				 foreach ($_POST['States'] as $key => $value) {
+					 $states.=$value;
+					 $states.=',';
+				 }
+				 $states = rtrim($states,",");
+				 $query->andWhere(['IN', "statusResumes_idStatusResume", $states]);
+			}
+		}
+		
+		$dataProvider = $this->GenerateResumesDataProvider($query);
+
+		return $this->render('archived',array(
+			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
 	}
 	public function spanState($state){
@@ -226,7 +213,7 @@ class CompanyController extends Controller
 				break;
 		}
 	}
-	protected function state($data){
+	/*protected function state($data){
 		$state = $data["statusResumesIdStatusResume"]["state"];
 		return $this->spanState($state);
 	}
@@ -244,60 +231,47 @@ class CompanyController extends Controller
 
 		return '<a href="'.Yii::getPathOfAlias('webroot').'/'.$data["document"].'">Click</a>';
 		// return $options;
-	}
-	public function actionSearchArchived(){
-
-		$criteria = new CDbCriteria;
-		if(isset($_POST['daterange']) && $_POST['daterange']!=''){
+	}*/
+	public function actionSearcharchived(){
+		$query = Resumes::find()->where(['<>','statusResumes_idStatusResume','1']);
+		
+		if($request->post('daterange')){
 			$dates = explode('to',$_POST['daterange']);
-			$dateStart = $dates[0];
-			$dateEnd = $dates[1];
-			$dateStart = trim($dateStart);
-			$dateEnd = trim($dateEnd);
-			$dateStart = date('Y-m-d H:i:s', strtotime($dateStart));
-			$dateEnd = date('Y-m-d H:i:s', strtotime($dateEnd));
-			$criteria->addCondition("dateApplication between '".$dateStart."' and '".$dateEnd."'");
+			$dates[0] = str_replace('/', '-', $dates[0]);
+			$dates[1] = str_replace('/', '-', $dates[1]);
+			$dateStart = date('Y-m-d H:i:s', strtotime(trim($dates[0])));
+			$dateEnd = date('Y-m-d H:i:s', strtotime(trim($dates[1])));
+			$query->andWhere(['BETWEEN', "dateApplication", $dateStart, $dateEnd]);
 		}
-		if(isset($_POST['keyword'])){
+		if($request->post('keyword')){
 			$keyword = $_POST['keyword'];
-			$criteria->addCondition("suffix like '%".$keyword."%' or firstName like '%".$keyword."%' or middleName like '%".$keyword."%' or lastName like '%".$keyword."%'");
+			$query->andWhere(['or',
+				['LIKE', 'suffix', $keyword],
+				['LIKE', 'firstName', $keyword],
+				['LIKE', 'middleName', $keyword],
+				['LIKE', 'lastName', $keyword]
+			]);
 		}
 
 		$states = '';
-		if(isset($_POST['States'])){
+		if($request->post('States')){
 		 	foreach ($_POST['States'] as $key => $value) {
 		 		$states.=$value;
 		 		$states.=',';
 		 	}
 		 	$states = rtrim($states,",");
-		 	$criteria->addCondition("statusResumes_idStatusResume IN (".$states.")");
+		 	$query->andWhere(['IN', "statusResumes_idStatusResume", $states]);
 		}
-		$criteria->addCondition('statusResumes_idStatusResume != 1');
-		$resumes = Resumes::model()->findAll($criteria);
-		$dataprovider =  new CArrayDataProvider($resumes, array(
-	    	'keyField'=>'idResume',
-		    'sort'=>array(
-		    	'defaultOrder'=>'dateApplication ASC',
-		        'attributes'=>array(
-		        	'dateApplication',
-		            'state'=>array(
-		                'asc'=>'statusResumesIdStatusResume.state',
-		                'desc'=>'statusResumesIdStatusResume.state desc',
-		            ),
-		            'applicant'=>array(
-		                'asc'=>'firstName',
-		                'desc'=>'firstName desc',
-	            	),
-	            ),
-            ),
-            'pagination'=>array(
-            	'pageSize'=>10
-			),
+
+		echo $query->createCommand()->getRawSql();
+		
+		$dataProvider = $this->GenerateResumesDataProvider($query);
+		$searchModel = new Resumes();
+
+		return $this->render('archived',array(
+			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
-		echo $this->renderPartial('_gridArchived',array(
-			'dataprovider'=>$dataprovider,
-		),true);
-	}*/
+	}
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -325,4 +299,35 @@ class CompanyController extends Controller
 			Yii::app()->end();
 		}
 	}*/
+
+	protected function GenerateResumesDataProvider($query){
+		$dataProvider =  new ActiveDataProvider([
+			'query' => $query,
+            'pagination'=>[
+            	'pageSize'=>10
+			],
+		]);
+
+		$dataProvider->setSort([
+			'attributes' => [
+				'statusResumes_idStatusResume' => [
+					'asc' => ['statusResumes_idStatusResume' => SORT_ASC],
+					'desc' => ['statusResumes_idStatusResume' => SORT_DESC],
+					'default' => SORT_ASC
+				],
+				'firstName' => [
+					'asc' => ['firstName' => SORT_ASC],
+					'desc' => ['firstName' => SORT_DESC],
+					'default' => SORT_ASC,
+				],
+				'dateApplication' => [
+					'asc' => ['dateApplication' => SORT_ASC],
+					'desc' => ['dateApplication' => SORT_DESC],
+					'default' => SORT_ASC,
+				]
+			],
+		]);
+
+		return $dataProvider;
+	}
 }

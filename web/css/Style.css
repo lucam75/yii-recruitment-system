@@ -62,7 +62,16 @@ textarea {
 .menuV{
 	display:inherit;
 }
+.menuV ul{
+	list-style: none;
+}
 .menuV a{
 	color:white !important;
-	font-weight: lighter;
+	font-weight: bold;
+}
+
+.menuV a.btn-default{
+	background-color: black;
+	display: block;
+	text-align: left;
 }

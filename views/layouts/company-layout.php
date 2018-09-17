@@ -1,10 +1,17 @@
-<?php /* @var $this Controller */ ?>
+<?php use yii\widgets\Menu; ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <div class="row">
 	<div class="col-xs-2">
-		<div id="sidebar">
+		<div id="sidebar" class="btn-group btn-group-vertical menuV hidden-xs">
 		
 		<?php
+			echo Menu::widget([
+				'items' => [
+					['label' => Yii::t('app','New'), 'url' => ['company/index']],
+					['label' => Yii::t('app','Archived'), 'url' => ['company/archived']]
+				],
+				'linkTemplate' => '<a class="btn btn-default" href="{url}"><i class="fa fa-list-alt"></i> {label}</a>'
+			]);
 			/*$this->beginWidget('zii.widgets.CPortlet', array(
 				'title'=>'Operations',
 			));

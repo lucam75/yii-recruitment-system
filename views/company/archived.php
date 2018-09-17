@@ -1,6 +1,15 @@
+<?php 
+    use yii\helpers\Html;
+    use yii\bootstrap\ActiveForm;
+    use app\models\Statusresumes;
+    use kartik\daterange\DateRangePicker;
+?>
 <h2><?php echo Yii::t('app','Archived resumes'); ?></h2>
 
-<?php echo CHtml::beginForm(); ?>
+<?php $form = ActiveForm::begin([
+        'id' => 'archived-search-form',
+        // 'action' => 'searcharchived'
+    ]); ?>
 <div class="row"><div class="col-xs-12"></div></div>
 <fieldset>
     <legend><?php echo Yii::t('app','Search'); ?></legend>
@@ -18,8 +27,19 @@
             <dd style="cursor:pointer !important;">
 				<div class="form-group" id="reportrange" >
 				  <div class="input-group">
-				    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				    <input type="text" class="form-control" id="range" placeholder="<?php echo Yii::t('app','Date range'); ?>" style="cursor:pointer !important;" name="daterange">
+                    <?php 
+                    echo DateRangePicker::widget([
+                        'name'=>'daterange',
+                        'presetDropdown'=>true,
+                        'hideInput'=>true,
+                        'pluginOptions'=>[
+                            'locale'=>[
+                                'format'=>'D/M/YYYY',
+                                'separator'=>' to ',
+                            ],
+                        ]
+                    ]);
+                    ?>
 				  </div>
 				</div>
             </dd>
@@ -33,11 +53,10 @@
           <dt><?php echo Yii::t('app','States'); ?></dt>
           <dd>
             <?php
-		$state = Statusresumes::model();
         echo '<div class="row">';
-		foreach ($state->findAll(array('order'=>'idStatusResume')) as $key) {
+		foreach (Statusresumes::find()->all() as $key) {
 			if($key->idStatusResume!='1')
-				echo '<div class="col-xs-4 col-md-3"><label><input type="checkbox" name="States[]" value="  '.$key->idStatusResume.'">'.$this->spanState($key->state)." </label></div>";
+				echo '<div class="col-xs-4 col-md-3"><label><input type="checkbox" name="States[]" value="  '.$key->idStatusResume.'">'.$this->context->spanState($key->state)." </label></div>";
 		}
         echo '</div>';
         ?>
@@ -48,20 +67,21 @@
     <div class="col-xs-6">
         <!-- <input id="filtrar" type="submit" class="crear_boton" value="Filtrar"> -->
         <?php
-            echo CHtml::ajaxSubmitButton(
+            /*echo CHtml::ajaxSubmitButton(
                 Yii::t('app','Search'),
                 array('Company/SearchArchived'),
                 array('update'=>'#searchDiv'),
                 array('class'=>'btn btn-default pull-right')
-            );
+            );*/
         ?>
+        <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-default pull-right', 'name'=>'submit-archived']) ?>
     </div>
 </div>
 
 <?php //$this->endWidget(); ?>
 
-<?php echo CHtml::endForm(); ?>
+<?php ActiveForm::end(); ?>
 </fieldset>
 <div id="searchDiv" style="margin-top:20px;">
-	<?php echo $this->renderPartial("_gridArchived",array('dataprovider'=>$dataprovider)); ?>
+    <?php echo $this->render("_gridResumes",array('dataProvider'=>$dataProvider)) ?>
 </div>
