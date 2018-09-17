@@ -9,6 +9,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Resumes;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Html; 
+use yii\helpers\Url; 
 
 class CompanyController extends Controller
 {
@@ -218,16 +220,16 @@ class CompanyController extends Controller
 		$options.=CHtml::link("<i class='fa fa-file-text-o' style='color:black; margin-right:5px;' title='".Yii::t('app','PDF')."'></i>",array("PDFSession","id"=>$data['idResume']),array('target'=>'_blank'));
 		// $options.="<i class='fa fa-trash-o Delete' style='cursor:pointer;' title='".Yii::t('app','Delete')."' id='".$data['idResume']."'></i>";
 		return $options;
-	}
-	protected function optionDoc($data) {
+	}*/
+	public function optiondoc($data) {
 		// $options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array("ViewDoc","id"=>$data['idDocument']));
 		// $document = Documents::model()->findByPk($data[]);
 		// $options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array());
-		return CHtml::link(Yii::t('app','View'), Yii::app()->baseUrl .'/' . $data["document"],array('target'=>'_blank'));
+		return Html::a(Yii::t('app','View'), Url::base() .'/' . $data["document"],array('target'=>'_blank'));
 
-		return '<a href="'.Yii::getPathOfAlias('webroot').'/'.$data["document"].'">Click</a>';
+		// return '<a href="'.Yii::getPathOfAlias('webroot').'/'.$data["document"].'">Click</a>';
 		// return $options;
-	}*/
+	}
 	public function actionSearcharchived(){
 		$query = Resumes::find()->where(['<>','statusResumes_idStatusResume','1']);
 		

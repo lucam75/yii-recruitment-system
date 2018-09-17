@@ -65,15 +65,6 @@
 
     </div>
     <div class="col-xs-6">
-        <!-- <input id="filtrar" type="submit" class="crear_boton" value="Filtrar"> -->
-        <?php
-            /*echo CHtml::ajaxSubmitButton(
-                Yii::t('app','Search'),
-                array('Company/SearchArchived'),
-                array('update'=>'#searchDiv'),
-                array('class'=>'btn btn-default pull-right')
-            );*/
-        ?>
         <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-default pull-right', 'name'=>'submit-archived']) ?>
     </div>
 </div>

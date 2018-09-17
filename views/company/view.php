@@ -25,7 +25,7 @@
 </div>
 <div class="row visible-xs">
 	<div class="col-xs-12">
-		<b><?php //echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
+		<b><?php echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
 	</div>
 </div>
 <div class="row">
@@ -79,7 +79,7 @@
 		<h3><?php echo Yii::t('app','Education & Formation'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listEducations',array('model'=>$model->educations)); ?>
+				<?php echo $this->render('_listEducations',array('model'=>$model->educations)); ?>
 			</ul>
 		</div>
 	</div>
@@ -90,7 +90,7 @@
 		<h3><?php echo Yii::t('app','Experience'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listSections',array('model'=>$model->experiences)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->experiences)); ?>
 			</ul>
 		</div>
 	</div>
@@ -101,7 +101,7 @@
 		<h3><?php echo Yii::t('app','Achievements'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listSections',array('model'=>$model->achievements)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->achievements)); ?>
 			</ul>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
 		<h3><?php echo Yii::t('app','Hobbies'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listSections',array('model'=>$model->hobbies)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->hobbies)); ?>
 			</ul>
 		</div>
 	</div>
@@ -123,7 +123,7 @@
 		<h3><?php echo Yii::t('app','Personal interests'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listSections',array('model'=>$model->interests)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->interests)); ?>
 			</ul>
 		</div>
 	</div>
@@ -134,7 +134,7 @@
 		<h3><?php echo Yii::t('app','Personal references'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php //echo $this->render('_listSections',array('model'=>$model->references)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->references)); ?>
 			</ul>
 		</div>
 	</div>
@@ -143,29 +143,7 @@
 <div class="row">
 	<div class="col-xs-12">
 		<h3><?php echo Yii::t('app','Complementary documents'); ?></h3>
-<?php
-/*$documents =$dataProvider = new CArrayDataProvider($model->documents, array('keyField'=>'idDocument'));
-$this->widget('bootstrap.widgets.BsGridView', array(
-    'dataProvider' =>$documents,
-    'id' =>'gridDocuments',
-    'columns' =>array(
-		array(
-        	'header'=>'#',
-        	'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
-		),
-		array('header'=>Yii::t('app','Document'),'name'=>'document'),
-		array('header'=>Yii::t('app','Description'),'name'=>'description'),
-		array('header'=>Yii::t('app','Type'),'name'=>'type'),
-		array(
-        	'header'=>Yii::t('app','View'),
-            'type'=>'raw',
-            'value'=>array($this,'optionDoc')
-        ),
-	),
-    'type' => BsHtml::GRID_TYPE_RESPONSIVE.' '.BsHtml::GRID_TYPE_HOVER.' '.BsHtml::GRID_TYPE_STRIPED
-
-    ));*/
-?>
+		<?php echo $this->render('_listDocuments',array('model'=>$model->documents)); ?>
 	</div>
 </div>
 

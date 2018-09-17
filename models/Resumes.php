@@ -137,4 +137,41 @@ class Resumes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume']);
     }
+
+    // Custom relations
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getExperiences()
+    {
+        return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '1']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAchievements()
+    {
+        return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '2']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHobbies()
+    {
+        return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '3']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInterests()
+    {
+        return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '4']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReferences()
+    {
+        return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '5']);
+    }                
 }

@@ -1,12 +1,17 @@
 <?php
-$dataProvider = new CArrayDataProvider($model, array('keyField'=>'idEducation'));
-$this->widget('zii.widgets.CListView', array(
-    'id'=>'clvListEducations',
-    'dataProvider'=>$dataProvider,
-    'itemView'=>'_detailEducation',
-    'enableSorting'=>false,
-    'enablePagination'=>false,
-    'summaryText'=>'',
+use yii\widgets\ListView;
+use yii\data\ArrayDataProvider;
+use app\models\Resumes;
+
+$dataProvider = new ArrayDataProvider([
+    'allModels' => $model,
+    'pagination' => false,
+]);
+echo ListView::widget([
+    'dataProvider' => $dataProvider,
+    'itemView' => '_detailEducation',
+    'summary' => '',
     'emptyText' => '',
-));
+]);
+
 ?>
