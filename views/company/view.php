@@ -7,7 +7,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-12">
-		<h4><?php echo $this->state($model); ?></h4>
+		<h4><?php echo $this->context->spanState($model->statusResumesIdStatusResume->state); ?></h4>
 	</div>
 </div>
 <div class="row hidden-xs">
@@ -15,17 +15,17 @@
 		<b><?php echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
 	</div>
 	<div class="col-xs-2">
-<img src="<?php echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
+<img src="<?php //echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
 	</div>
 </div>
 <div class="row visible-xs">
 	<div class="col-xs-12">
-		<img src="<?php echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
+		<img src="<?php //echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
 	</div>
 </div>
 <div class="row visible-xs">
 	<div class="col-xs-12">
-		<b><?php echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
+		<b><?php //echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
 	</div>
 </div>
 <div class="row">
@@ -79,7 +79,7 @@
 		<h3><?php echo Yii::t('app','Education & Formation'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listEducations',array('model'=>$model->educations)); ?>
+				<?php //echo $this->render('_listEducations',array('model'=>$model->educations)); ?>
 			</ul>
 		</div>
 	</div>
@@ -90,7 +90,7 @@
 		<h3><?php echo Yii::t('app','Experience'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->experiences)); ?>
+				<?php //echo $this->render('_listSections',array('model'=>$model->experiences)); ?>
 			</ul>
 		</div>
 	</div>
@@ -101,7 +101,7 @@
 		<h3><?php echo Yii::t('app','Achievements'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->achievements)); ?>
+				<?php //echo $this->render('_listSections',array('model'=>$model->achievements)); ?>
 			</ul>
 		</div>
 	</div>
@@ -112,7 +112,7 @@
 		<h3><?php echo Yii::t('app','Hobbies'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->hobbies)); ?>
+				<?php //echo $this->render('_listSections',array('model'=>$model->hobbies)); ?>
 			</ul>
 		</div>
 	</div>
@@ -123,7 +123,7 @@
 		<h3><?php echo Yii::t('app','Personal interests'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->interests)); ?>
+				<?php //echo $this->render('_listSections',array('model'=>$model->interests)); ?>
 			</ul>
 		</div>
 	</div>
@@ -134,7 +134,7 @@
 		<h3><?php echo Yii::t('app','Personal references'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->references)); ?>
+				<?php //echo $this->render('_listSections',array('model'=>$model->references)); ?>
 			</ul>
 		</div>
 	</div>
@@ -144,7 +144,7 @@
 	<div class="col-xs-12">
 		<h3><?php echo Yii::t('app','Complementary documents'); ?></h3>
 <?php
-$documents =$dataProvider = new CArrayDataProvider($model->documents, array('keyField'=>'idDocument'));
+/*$documents =$dataProvider = new CArrayDataProvider($model->documents, array('keyField'=>'idDocument'));
 $this->widget('bootstrap.widgets.BsGridView', array(
     'dataProvider' =>$documents,
     'id' =>'gridDocuments',
@@ -164,7 +164,7 @@ $this->widget('bootstrap.widgets.BsGridView', array(
 	),
     'type' => BsHtml::GRID_TYPE_RESPONSIVE.' '.BsHtml::GRID_TYPE_HOVER.' '.BsHtml::GRID_TYPE_STRIPED
 
-    ));
+    ));*/
 ?>
 	</div>
 </div>
@@ -177,7 +177,7 @@ $this->widget('bootstrap.widgets.BsGridView', array(
 <div class="row">
 	<div class="col-xs-12">
 		<?php
-echo CHtml::link("<i class='fa fa-reply' title='".Yii::t('app','Back')."'></i> ".Yii::t('app','Back'),array("Company/index"));
+//echo CHtml::link("<i class='fa fa-reply' title='".Yii::t('app','Back')."'></i> ".Yii::t('app','Back'),array("Company/index"));
 		 ?>
 		<div class="pull-right">
 			<button type="button" class="btn btn-danger" id="buttonReject"><?php echo Yii::t('app','Reject'); ?></button>

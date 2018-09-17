@@ -95,13 +95,9 @@ class CompanyController extends Controller
 				}
 			}
 		}
-	}
+	}*/
 
-	public function actionViewSession($id){
-		Yii::app()->session['idResume'] = $id;
-		$this->redirect(array("Company/View"));
-	}
-	public function actionPDFSession($id){
+	/*public function actionPDFSession($id){
 		Yii::app()->session['idResume'] = $id;
 		$this->redirect(array("Company/PDF"));
 	}
@@ -118,12 +114,12 @@ class CompanyController extends Controller
 			$mPDF1->Output();
 // $this->render('view',array('model'=>$this->loadModel(Yii::app()->session['idResume'])));
 	}*/
-	/*public function actionView()
+	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel(Yii::app()->session['idResume'])
+		return $this->render('view',array(
+			'model'=>$this->loadModel($id)
 		));
-	}*/
+	}
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -213,11 +209,11 @@ class CompanyController extends Controller
 				break;
 		}
 	}
-	/*protected function state($data){
+	protected function state($data){
 		$state = $data["statusResumesIdStatusResume"]["state"];
 		return $this->spanState($state);
 	}
-	protected function optionsColumn($data) {
+	/*protected function optionsColumn($data) {
 		$options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array("ViewSession","id"=>$data['idResume']));
 		$options.=CHtml::link("<i class='fa fa-file-text-o' style='color:black; margin-right:5px;' title='".Yii::t('app','PDF')."'></i>",array("PDFSession","id"=>$data['idResume']),array('target'=>'_blank'));
 		// $options.="<i class='fa fa-trash-o Delete' style='cursor:pointer;' title='".Yii::t('app','Delete')."' id='".$data['idResume']."'></i>";
@@ -279,13 +275,13 @@ class CompanyController extends Controller
 	 * @return Resumes the loaded model
 	 * @throws CHttpException
 	 */
-	/*public function loadModel($id)
+	public function loadModel($id)
 	{
-		$model=Resumes::model()->findByPk($id);
+		$model=Resumes::findOne($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
-	}*/
+	}
 
 	/**
 	 * Performs the AJAX validation.
