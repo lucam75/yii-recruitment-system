@@ -1,3 +1,6 @@
+<?php
+	use yii\helpers\Url;
+?>
 <div class="row">
 	<div class="col-xs-8">
 		<div class="text-left">
@@ -7,10 +10,10 @@
 </div>
 <div class="row">
 	<div class="col-xs-5">
-		<h4><?php echo $this->state($model); ?></h4>
+		<h4><?php echo $this->context->spanState($model->statusResumesIdStatusResume->state); ?></h4>
 	</div>
 	<div class="col-xs-2 pull-right">
-		<img src="<?php echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Responsive image">
+		<img src="<?php echo Url::base()."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Responsive image">
 	</div>
 </div>
 <div class="row">
@@ -68,7 +71,7 @@
 		<h3><?php echo Yii::t('app','Education & Formation'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listEducations',array('model'=>$model->educations)); ?>
+				<?php echo $this->render('_listEducations',array('model'=>$model->educations)); ?>
 			</ul>
 		</div>
 	</div>
@@ -79,7 +82,7 @@
 		<h3><?php echo Yii::t('app','Experience'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->experiences)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->experiences)); ?>
 			</ul>
 		</div>
 	</div>
@@ -90,7 +93,7 @@
 		<h3><?php echo Yii::t('app','Achievements'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->achievements)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->achievements)); ?>
 			</ul>
 		</div>
 	</div>
@@ -101,7 +104,7 @@
 		<h3><?php echo Yii::t('app','Hobbies'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->hobbies)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->hobbies)); ?>
 			</ul>
 		</div>
 	</div>
@@ -112,7 +115,7 @@
 		<h3><?php echo Yii::t('app','Personal interests'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->interests)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->interests)); ?>
 			</ul>
 		</div>
 	</div>
@@ -123,7 +126,7 @@
 		<h3><?php echo Yii::t('app','Personal references'); ?></h3>
 		<div class="row" style ="margin-top:10px;">
 			<ul>
-				<?php echo $this->renderPartial('_listSections',array('model'=>$model->references)); ?>
+				<?php echo $this->render('_listSections',array('model'=>$model->references)); ?>
 			</ul>
 		</div>
 	</div>
@@ -132,19 +135,6 @@
 <div class="row">
 	<div class="col-xs-12">
 		<h3><?php echo Yii::t('app','Complementary documents'); ?></h3>
-<?php
-$documents =$dataProvider = new CArrayDataProvider($model->documents, array('keyField'=>'idDocument'));
-$this->widget('bootstrap.widgets.BsGridView', array(
-    'dataProvider' =>$documents,
-    'id' =>'gridDocuments',
-    'columns' =>array(
-		array('header'=>Yii::t('app','Document'),'name'=>'document'),
-		array('header'=>Yii::t('app','Description'),'name'=>'description'),
-		array('header'=>Yii::t('app','Type'),'name'=>'type'),
-	),
-    'type' => BsHtml::GRID_TYPE_STRIPED." ".BsHtml::GRID_TYPE_CONDENSED
-
-    ));
-?>
+		<?php echo $this->render('_listDocuments',array('model'=>$model->documents)); ?>
 	</div>
 </div>

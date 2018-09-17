@@ -9,8 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Resumes;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html; 
-use yii\helpers\Url; 
+use yii\helpers\Html;
+use yii\helpers\Url;
+use kartik\mpdf\Pdf;
 
 class CompanyController extends Controller
 {
@@ -99,42 +100,68 @@ class CompanyController extends Controller
 		}
 	}*/
 
-	/*public function actionPDFSession($id){
-		Yii::app()->session['idResume'] = $id;
-		$this->redirect(array("Company/PDF"));
+	public function actionPdf($id){
+		
+		$model = $this->loadModel($id);
+		$this->view->title = $model->compositename." - Resume";
+		$content = $this->renderPartial('viewPDF',array('model'=>$model));
+
+		// setup kartik\mpdf\Pdf component
+		$pdf = new Pdf([
+			// set to use core fonts only
+			'mode' => Pdf::MODE_CORE, 
+			// A4 paper format
+			'format' => Pdf::FORMAT_A4, 
+			// portrait orientation
+			'orientation' => Pdf::ORIENT_PORTRAIT, 
+			// stream to browser inline
+			'destination' => Pdf::DEST_BROWSER, 
+			// your html content input
+			'content' => $content,  
+			// format content from your own css file if needed or use the
+			// enhanced bootstrap css built by Krajee for mPDF formatting 
+			'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+			// any css to be embedded if required
+			// 'cssInline' => '.kv-heading-1{font-size:18px}', 
+			// set mPDF properties on the fly
+			'options' => ['title' => 'Resume for '.$model->compositename],
+			// call mPDF methods on the fly
+			'methods' => [ 
+				'SetHeader'=>[Yii::$app->name], 
+				'SetFooter'=>['{PAGENO}'],
+			],
+			'filename' => $model->compositename." - Resume.pdf"
+		]);
+		
+		// return the pdf output as per the destination setting
+		Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+
+		$headers = Yii::$app->response->headers;
+	
+		$headers->add('Content-Type', 'application/pdf');
+	
+		return $pdf->render(); 
 	}
-	public function actionPDF(){
-
-			$this->layout='pdf';
-			$mPDF1 = Yii::app()->ePdf->mpdf('c', 'Letter', 0, '', 40, 30, 40, 30, 0, 9, 'P');
-			$mPDF1->SetDisplayMode('fullpage');
-
-			$mPDF1->WriteHTML($this->render('viewPDF',array(
-			'model'=>$this->loadModel(Yii::app()->session['idResume'])
-		), true));
-
-			$mPDF1->Output();
-// $this->render('view',array('model'=>$this->loadModel(Yii::app()->session['idResume'])));
-	}*/
 	public function actionView($id)
 	{
+		$model = $this->loadModel($id);
+		$this->view->title = $model->compositename." - View Resume";
 		return $this->render('view',array(
-			'model'=>$this->loadModel($id)
-		));
+			'model'=>$model));
 	}
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	/*public function actionDelete($id)
+	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-	}*/
+	}
 
 	/**
 	 * Lists all models.
@@ -215,12 +242,11 @@ class CompanyController extends Controller
 		$state = $data["statusResumesIdStatusResume"]["state"];
 		return $this->spanState($state);
 	}
-	/*protected function optionsColumn($data) {
-		$options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array("ViewSession","id"=>$data['idResume']));
-		$options.=CHtml::link("<i class='fa fa-file-text-o' style='color:black; margin-right:5px;' title='".Yii::t('app','PDF')."'></i>",array("PDFSession","id"=>$data['idResume']),array('target'=>'_blank'));
-		// $options.="<i class='fa fa-trash-o Delete' style='cursor:pointer;' title='".Yii::t('app','Delete')."' id='".$data['idResume']."'></i>";
+	public function optionscolumn($data) {
+		$options = Html::a("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",["view","id"=>$data['idResume']]);
+		$options.= Html::a("<i class='fa fa-file-text-o' style='color:black; margin-right:5px;' title='".Yii::t('app','PDF')."'></i>",["pdf","id"=>$data['idResume']],['target'=>'_blank','data-pjax'=>"0"]);
 		return $options;
-	}*/
+	}
 	public function optiondoc($data) {
 		// $options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array("ViewDoc","id"=>$data['idDocument']));
 		// $document = Documents::model()->findByPk($data[]);
@@ -284,19 +310,6 @@ class CompanyController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param Resumes $model the model to be validated
-	 */
-	/*protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='resumes-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}*/
 
 	protected function GenerateResumesDataProvider($query){
 		$dataProvider =  new ActiveDataProvider([

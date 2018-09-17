@@ -174,4 +174,8 @@ class Resumes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Sections::className(), ['resumes_idResume' => 'idResume'])->andOnCondition(['typeSection_idtypeSection' => '5']);
     }                
+
+    public function getCompositeName(){
+        return $this->suffix." ".$this->firstName." ".$this->middleName." ".$this->lastName;
+    }
 }

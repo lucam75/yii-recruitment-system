@@ -1,3 +1,6 @@
+<?php
+	use yii\helpers\Url;
+?>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="text-center">
@@ -15,12 +18,12 @@
 		<b><?php echo Yii::t('app','Professional profile: '); ?></b><br /> <p class="text-justify"> <?php echo $model->profile; ?> </p>
 	</div>
 	<div class="col-xs-2">
-<img src="<?php //echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
+<img src="<?php echo Url::base()."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
 	</div>
 </div>
 <div class="row visible-xs">
 	<div class="col-xs-12">
-		<img src="<?php //echo Yii::app()->baseUrl."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
+		<img src="<?php echo Url::base()."/".$model->picture; ?>" class="img-responsive img-thumbnail" alt="Profile picture">
 	</div>
 </div>
 <div class="row visible-xs">

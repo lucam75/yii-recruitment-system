@@ -33,15 +33,10 @@ echo GridView::widget([
 			'value'=>function($data) { return $data->suffix." ".$data->firstName." ".$data->middleName." ".$data->lastName; },
 			'attribute' => 'firstName',
 		],
-		// [
-        // 	'header'=>'<a style="text-decoration:none;">'.Yii::t('app','Options').'</a>',
-        //     // 'type'=>'raw',
-        //     // 'value'=>[$this,'optionsColumn']
-		// ],
 		[
-			'header'=>'<a style="text-decoration:none;">'.Yii::t('app','Options').'</a>',
-			'class' => 'yii\grid\ActionColumn',
-            // you may configure additional properties here
+			'header'=>Yii::t('app','Options'),
+            'format'=>'raw',
+            'value'=>array($this->context,'optionsColumn')
         ],
 	]
 ]);
