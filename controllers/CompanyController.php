@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Resumes;
+use app\models\Changelogstatus;
+use app\models\Employees;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -43,62 +45,66 @@ class CompanyController extends Controller
         ];
 	}
 
-	/*public function actionManageResume(){
-		if(isset($_POST["action"])){
-			$action = $_POST["action"];
-			$model = $this->loadModel(Yii::app()->session['idResume']);
-			$statusOld = $model->statusResumes_idStatusResume;
-			switch ($action) {
-				case 'call':
-					$model->statusResumes_idStatusResume = '3';
-					break;
-				case 'pending':
-					$model->statusResumes_idStatusResume = '2';
-				break;
-				case 'reject':
-					$model->statusResumes_idStatusResume = '4';
-				break;
-			}
-			if(!$model->save(false)){
-				print_r($model->getErrors());
-			}else{
+	public function actionManageresume(){
+		$request = Yii::$app->request;
+		if ($request->isPost){
+			if($request->post('action') && $request->post('idresume')){
+				try{
+					$action = $request->post('action');
+					$idResume = $request->post('idresume');
+					$model = $this->loadModel($idResume);
+					$statusOld = $model->statusResumes_idStatusResume;
+					switch ($action) {
+						case 'call':
+							$model->statusResumes_idStatusResume = '3';
+							break;
+						case 'pending':
+							$model->statusResumes_idStatusResume = '2';
+						break;
+						case 'reject':
+							$model->statusResumes_idStatusResume = '4';
+						break;
+					}
+					if(!$model->save(false)){
+						print_r($model->getErrors());
+					}else{
+						$message = $model->statusResumesIdStatusResume->templateEmail;
+						$message.="<br />";
+						$message.="Old status: ".$statusOld."<br />";
+						$message.="New status: ".$model->statusResumesIdStatusResume->state."<br />";
 
-				Yii::import('application.extensions.phpmailer.JPhpMailer');
-				$mail = new JPhpMailer;
-				$mail->IsSMTP();
-				$mail->Host = 'smtp.googlemail.com:465';
-				$mail->SMTPSecure = "ssl";
-				$mail->SMTPAuth = true;
-				$mail->Username = 'recruitment.caniatech@gmail.com';
-				$mail->Password = 'caniatech123';
-				$mail->SetFrom('yourname@163.com', 'Recruitmen team');
-				$mail->Subject = 'About your resume in our company';
-				$mail->AltBody = 'To view the message, please use an HTML compatible email viewer.';
-				$message = $model->statusResumesIdStatusResume->templateEmail;
-				$message.="<br />";
-				$old = Statusresumes::model()->findByPk($statusOld);
-				$message.="Old status: ".$old->state."<br />";
-				$message.="New status: ".$model->statusResumesIdStatusResume->state."<br />";
-				$mail->MsgHTML($message);
-				$mail->AddAddress($model->email,$model->suffix." ".$model->firstName." ".$model->middleName." ".$model->lastName);
-				$mail->Send();
+						Yii::$app->mailer->compose()
+						->setFrom('from@domain.com')
+						->setTo($model->email)
+						->setSubject('About your resume in our company')
+						->setTextBody($message)
+						->setHtmlBody($message)
+						->send();
 
+						$employee = new Employees();
+                		$loggedEmployee = $employee->findById(Yii::$app->user->id);
+                		$loggedUserRoleId = $loggedEmployee->roles_idRol;
 
-				$log = new Changelogstatus;
-			 	$log->statusOld = $statusOld;
-			 	$log->statusNew = $model->statusResumes_idStatusResume;
-			 	$log->date = date('Y-m-d H:i:s');
-			 	$log->resumes_idResume = $model->idResume;
-			 	$log->employees_idEmployee = Yii::app()->user->userid;
-			 	$log->employees_roles_idRol = Yii::app()->user->useridrol;
-			 	if(!$log->save()){
-			 		print_r($log->getErrors());
-			 	}else{
-					echo "success";
+						$log = new Changelogstatus();
+						$log->statusOld = $statusOld;
+						$log->statusNew = $model->statusResumes_idStatusResume;
+						$log->date = date('Y-m-d H:i:s');
+						$log->resumes_idResume = $model->idResume;
+						$log->employees_idEmployee = Yii::$app->user->id;
+						$log->employees_roles_idRol = $loggedUserRoleId;
+						if(!$log->save()){
+							print_r($log->getErrors());
+						}else{
+							echo "success";
+						}
+					}
+				}catch(\Exception $ex){
+					var_dump($ex->getMessage());
+					die();
 				}
 			}
 		}
-	}*/
+	}
 
 	public function actionPdf($id){
 		
@@ -142,6 +148,7 @@ class CompanyController extends Controller
 	
 		return $pdf->render(); 
 	}
+
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
@@ -149,25 +156,13 @@ class CompanyController extends Controller
 		return $this->render('view',array(
 			'model'=>$model));
 	}
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-	}
 
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
+		$this->view->title = Yii::t('app','Incoming resumes');
 		$searchModel = new Resumes();
 		$query = Resumes::find()->where(['statusResumes_idStatusResume'=>'1']);
 		
@@ -177,8 +172,10 @@ class CompanyController extends Controller
 			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
 	}
+
 	public function actionArchived()
 	{
+		$this->view->title = Yii::t('app','Archived resumes');
 		$request = Yii::$app->request;
 		$searchModel = new Resumes();
 		$query = Resumes::find()->where(['<>','statusResumes_idStatusResume','1']);
@@ -219,6 +216,7 @@ class CompanyController extends Controller
 			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
 		));
 	}
+
 	public function spanState($state){
 		switch ($state) {
 			case 'New':
@@ -238,64 +236,22 @@ class CompanyController extends Controller
 				break;
 		}
 	}
+
 	protected function state($data){
 		$state = $data["statusResumesIdStatusResume"]["state"];
 		return $this->spanState($state);
 	}
+
 	public function optionscolumn($data) {
 		$options = Html::a("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",["view","id"=>$data['idResume']]);
 		$options.= Html::a("<i class='fa fa-file-text-o' style='color:black; margin-right:5px;' title='".Yii::t('app','PDF')."'></i>",["pdf","id"=>$data['idResume']],['target'=>'_blank','data-pjax'=>"0"]);
 		return $options;
 	}
+
 	public function optiondoc($data) {
-		// $options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array("ViewDoc","id"=>$data['idDocument']));
-		// $document = Documents::model()->findByPk($data[]);
-		// $options = CHtml::link("<i class='fa fa-eye' style='color:black; margin-right:5px;' title='".Yii::t('app','View')."'></i>",array());
 		return Html::a(Yii::t('app','View'), Url::base() .'/' . $data["document"],array('target'=>'_blank'));
-
-		// return '<a href="'.Yii::getPathOfAlias('webroot').'/'.$data["document"].'">Click</a>';
-		// return $options;
 	}
-	public function actionSearcharchived(){
-		$query = Resumes::find()->where(['<>','statusResumes_idStatusResume','1']);
-		
-		if($request->post('daterange')){
-			$dates = explode('to',$_POST['daterange']);
-			$dates[0] = str_replace('/', '-', $dates[0]);
-			$dates[1] = str_replace('/', '-', $dates[1]);
-			$dateStart = date('Y-m-d H:i:s', strtotime(trim($dates[0])));
-			$dateEnd = date('Y-m-d H:i:s', strtotime(trim($dates[1])));
-			$query->andWhere(['BETWEEN', "dateApplication", $dateStart, $dateEnd]);
-		}
-		if($request->post('keyword')){
-			$keyword = $_POST['keyword'];
-			$query->andWhere(['or',
-				['LIKE', 'suffix', $keyword],
-				['LIKE', 'firstName', $keyword],
-				['LIKE', 'middleName', $keyword],
-				['LIKE', 'lastName', $keyword]
-			]);
-		}
-
-		$states = '';
-		if($request->post('States')){
-		 	foreach ($_POST['States'] as $key => $value) {
-		 		$states.=$value;
-		 		$states.=',';
-		 	}
-		 	$states = rtrim($states,",");
-		 	$query->andWhere(['IN', "statusResumes_idStatusResume", $states]);
-		}
-
-		echo $query->createCommand()->getRawSql();
-		
-		$dataProvider = $this->GenerateResumesDataProvider($query);
-		$searchModel = new Resumes();
-
-		return $this->render('archived',array(
-			'dataProvider'=>$dataProvider,'searchModel' => $searchModel,
-		));
-	}
+	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.

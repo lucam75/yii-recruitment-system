@@ -12,14 +12,6 @@
 				],
 				'linkTemplate' => '<a class="btn btn-default" href="{url}"><i class="fa fa-list-alt"></i> {label}</a>'
 			]);
-			/*$this->beginWidget('zii.widgets.CPortlet', array(
-				'title'=>'Operations',
-			));
-			$this->widget('zii.widgets.CMenu', array(
-				'items'=>$this->menu,
-				'htmlOptions'=>array('class'=>'operations'),
-			));
-			$this->endWidget();*/
 		?>
 		</div><!-- sidebar -->
 	</div>
@@ -29,4 +21,6 @@
 		</div><!-- content -->
 	</div>
 </div>
+<?= $this->registerJsFile(Yii::$app->request->BaseUrl . '/js/company.js', ['depends' => [yii\web\JqueryAsset::className()]]);
+ ?>
 <?php $this->endContent(); ?>

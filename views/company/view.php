@@ -161,19 +161,19 @@
 //echo CHtml::link("<i class='fa fa-reply' title='".Yii::t('app','Back')."'></i> ".Yii::t('app','Back'),array("Company/index"));
 		 ?>
 		<div class="pull-right">
-			<button type="button" class="btn btn-danger" id="buttonReject"><?php echo Yii::t('app','Reject'); ?></button>
-			<button type="button" class="btn btn-warning" id="buttonPending"><?php echo Yii::t('app','Pending'); ?></button>
-			<button type="button" class="btn btn-success" id="buttonCall"><?php echo Yii::t('app','Call for interview'); ?></button>
+			<button type="button" class="btn btn-danger" id="buttonReject" data-toggle="modal" data-target="#view-modal"><?php echo Yii::t('app','Reject'); ?></button>
+			<button type="button" class="btn btn-warning" id="buttonPending" data-toggle="modal" data-target="#view-modal"><?php echo Yii::t('app','Pending'); ?></button>
+			<button type="button" class="btn btn-success" id="buttonCall" data-toggle="modal" data-target="#view-modal"><?php echo Yii::t('app','Call for interview'); ?></button>
 		</div>
 	</div>
 </div>
 
- <div class="modal" id="view-modal">
-  <div class="modal-dialog">
+ <div class="modal fade" id="view-modal" role="dialog" aria-labelledby="myModalLabel" data-resume-id="<?= $model->idResume; ?>">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title"></h4>
+        <h4 class="modal-title" id="myModalLabel"></h4>
       </div>
       <div class="modal-body">
       	<div class="call" style="display:none;"><?php echo Yii::t('app','It will be sent an email informing the applicant about the decision. Confirm that you want to call for an interview?'); ?></div>
