@@ -1,12 +1,27 @@
 <?php
 
+namespace app\controllers;
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\Response;
+use yii\filters\VerbFilter;
+use app\models\Resumes;
+use app\models\Statusresumes;
+use app\models\Changelogstatus;
+use app\models\Employees;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use kartik\mpdf\Pdf;
+
 class AdministratorController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='admin';
+	public $layout='admin-layout';
 
 	/**
 	 * @return array action filters
@@ -83,113 +98,37 @@ class AdministratorController extends Controller
 		}
 	}
 	public function actionChangelog(){
-		$criteria=new CDbCriteria;
-		// $criteria->addCondition('statusResumes_idStatusResume != 1');
-		$status = Changelogstatus::model()->findAll($criteria);
-		$dataprovider =  new CArrayDataProvider($status, array(
-	    	'keyField'=>'idChangeLogStatus',
-		    'sort'=>array(
-		    	'defaultOrder'=>'idChangeLogStatus ASC',
-		        'attributes'=>array(
-		            'id'=>array(
-		                'asc'=>'idChangeLogStatus asc',
-		                'desc'=>'idChangeLogStatus desc',
-		            ),
-		            'stateOld'=>array(
-		                'asc'=>'thisStatusOld.state asc',
-		                'desc'=>'thisStatusOld.state desc',
-		            ),
-		            'stateNew'=>array(
-		                'asc'=>'thisStatusNew.state asc',
-		                'desc'=>'thisStatusNew.state desc',
-		            ),
-		            'date'=>array(
-		                'asc'=>'date asc',
-		                'desc'=>'date desc',
-		            ),
-		            'employee'=>array(
-		                'asc'=>'employeesIdEmployee.name asc',
-		                'desc'=>'employeesIdEmployee.name desc',
-		            ),
-		            'rol'=>array(
-		                'asc'=>'employeesRolesIdRol.name asc',
-		                'desc'=>'employeesRolesIdRol.name desc',
-		            ),
-	            ),
-            ),
-            'pagination'=>array(
-            	'pageSize'=>10
-			),
-		));
-		$this->render('changelog',array(
-			'dataprovider'=>$dataprovider,
-		));
-	}
 
-	public function actionSearchChangelog(){
+		$request = Yii::$app->request;
+		$query = Changelogstatus::find();
 
-		$criteria = new CDbCriteria;
-		if(isset($_POST['daterange']) && $_POST['daterange']!=''){
-			$dates = explode('to',$_POST['daterange']);
-			$dateStart = $dates[0];
-			$dateEnd = $dates[1];
-			$dateStart = trim($dateStart);
-			$dateEnd = trim($dateEnd);
-			$dateStart = date('Y-m-d H:i:s', strtotime($dateStart));
-			$dateEnd = date('Y-m-d H:i:s', strtotime($dateEnd));
-			$criteria->addCondition("date between '".$dateStart."' and '".$dateEnd."'");
+		if ($request->isPost){
+			if($request->post('daterange')){
+				$dates = explode('to',$_POST['daterange']);
+				$dates[0] = str_replace('/', '-', $dates[0]);
+				$dates[1] = str_replace('/', '-', $dates[1]);
+				$dateStart = date('Y-m-d H:i:s', strtotime(trim($dates[0])));
+				$dateEnd = date('Y-m-d H:i:s', strtotime(trim($dates[1])));
+				$query->andWhere(['BETWEEN', "date", $dateStart, $dateEnd]);
+			}
+			if($request->post('keyword')){
+				$keyword = $_POST['keyword'];
+				$query->innerJoin('employees', '`employees_idEmployee` = `idEmployee`')->andWhere(['LIKE', 'name', $keyword]);
+			}
+
+			if($request->post('StateOld')){
+				 $query->andWhere(['=',"statusOld", $_POST['StateOld']]);
+			}
+			if($request->post('StateNew')){
+				$query->andWhere(['=',"statusNew", $_POST['StateNew']]);
+		   }
 		}
-		if(isset($_POST['keyword'])){
-			$keyword = $_POST['keyword'];
-			$criteria->with = array("employeesIdEmployee");
-			$criteria->addCondition("employeesIdEmployee.name like '%".$keyword."%'");
-		}
-		// print_r($_POST);
-		if(isset($_POST['StateOld'])){
-		 	$criteria->addCondition("statusOld ='".$_POST['StateOld']."'");
-		}
-		if(isset($_POST['StateNew'])){
-		 	$criteria->addCondition("statusNew ='".$_POST['StateNew']."'");
-		}
-		$logs = Changelogstatus::model()->findAll($criteria);
-		$dataprovider =  new CArrayDataProvider($logs, array(
-	    	'keyField'=>'idChangeLogStatus',
-		    'sort'=>array(
-		    	'defaultOrder'=>'idChangeLogStatus ASC',
-		        'attributes'=>array(
-		            'id'=>array(
-		                'asc'=>'idChangeLogStatus asc',
-		                'desc'=>'idChangeLogStatus desc',
-		            ),
-		            'stateOld'=>array(
-		                'asc'=>'thisStatusOld.state asc',
-		                'desc'=>'thisStatusOld.state desc',
-		            ),
-		            'stateNew'=>array(
-		                'asc'=>'thisStatusNew.state asc',
-		                'desc'=>'thisStatusNew.state desc',
-		            ),
-		            'date'=>array(
-		                'asc'=>'date asc',
-		                'desc'=>'date desc',
-		            ),
-		            'employee'=>array(
-		                'asc'=>'employeesIdEmployee.name asc',
-		                'desc'=>'employeesIdEmployee.name desc',
-		            ),
-		            'rol'=>array(
-		                'asc'=>'employeesRolesIdRol.name asc',
-		                'desc'=>'employeesRolesIdRol.name desc',
-		            ),
-	            ),
-            ),
-            'pagination'=>array(
-            	'pageSize'=>10
-			),
+
+		$dataProvider =  $this->GenerateDataProvider($query);
+
+		return $this->render('changelog',array(
+			'dataProvider'=>$dataProvider,
 		));
-		echo $this->renderPartial('_gridChangelog',array(
-			'dataprovider'=>$dataprovider,
-		),true);
 	}
 
 	public function actionStatistics(){
@@ -231,7 +170,15 @@ class AdministratorController extends Controller
 	}
 
 	public function actionTemplates(){
-		$criteria=new CDbCriteria;
+
+		$query = Statusresumes::find()->where(['!=','idStatusResume','1']);
+		$dataProvider =  new ActiveDataProvider([
+			'query' => $query,
+            'pagination'=>[
+            	'pageSize'=>10
+			],
+		]);
+		/*$criteria=new CDbCriteria;
 		$criteria->addCondition('idStatusResume != 1');
 		$status = Statusresumes::model()->findAll($criteria);
 		$dataprovider =  new CArrayDataProvider($status, array(
@@ -248,9 +195,9 @@ class AdministratorController extends Controller
             'pagination'=>array(
             	'pageSize'=>10
 			),
-		));
+		));*/
 
-		$this->render("templates",array('dataprovider'=>$dataprovider));
+		return $this->render("templates",array('dataProvider'=>$dataProvider));
 
 	}
 	public function actionCKEditor(){
@@ -284,16 +231,33 @@ class AdministratorController extends Controller
 		return $model;
 	}
 
-	/**
-	 * Performs the AJAX validation.
-	 * @param Resumes $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='resumes-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
+	public function GenerateDataProvider($query){
+		$dataProvider =  new ActiveDataProvider([
+			'query' => $query,
+            'pagination'=>[
+            	'pageSize'=>10
+			],
+		]);
+
+		$dataProvider->setSort([
+			'attributes' => [
+				'stateOld' => [
+					'asc' => ['stateOld' => SORT_ASC],
+					'desc' => ['stateOld' => SORT_DESC],
+					'default' => SORT_ASC
+				],
+				'stateNew' => [
+					'asc' => ['stateNew' => SORT_ASC],
+					'desc' => ['stateNew' => SORT_DESC],
+					'default' => SORT_ASC,
+				],
+				'date' => [
+					'asc' => ['date' => SORT_ASC],
+					'desc' => ['date' => SORT_DESC],
+					'default' => SORT_ASC,
+				]
+			],
+		]);
+		return $dataProvider;
 	}
 }

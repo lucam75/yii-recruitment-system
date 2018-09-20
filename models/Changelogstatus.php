@@ -63,4 +63,14 @@ class Changelogstatus extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Employees::className(), ['idEmployee' => 'employees_idEmployee', 'roles_idRol' => 'employees_roles_idRol']);
     }
+
+    public function getStatusOldText()
+    {
+        return Statusresumes::findOne($this->statusOld);
+    }
+
+    public function getStatusNewText()
+    {
+        return Statusresumes::findOne($this->statusNew);
+    }
 }

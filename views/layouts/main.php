@@ -6,6 +6,7 @@
 use app\widgets\Alert;
 use yii\helpers\Html;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -18,6 +19,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Basic recruitment app in Yii2">
     <meta name="author" content="Luis M. Campos">
+    <link href="<?= Url::base() ?>/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title)." | ".Html::encode(Yii::$app->name); ?></title>
     <?php $this->head() ?>

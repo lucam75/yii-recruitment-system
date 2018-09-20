@@ -8,7 +8,6 @@
 
 <?php $form = ActiveForm::begin([
         'id' => 'archived-search-form',
-        // 'action' => 'searcharchived'
     ]); ?>
 <div class="row"><div class="col-xs-12"></div></div>
 <fieldset>
