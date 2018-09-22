@@ -8,6 +8,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\Resumes;
 use app\models\Statusresumes;
+use app\models\Countries;
 use app\models\Changelogstatus;
 use app\models\Employees;
 use yii\data\ActiveDataProvider;
@@ -132,41 +133,21 @@ class AdministratorController extends Controller
 	}
 
 	public function actionStatistics(){
-		$status = Statusresumes::model()->findAll();
-		$total = 0;
-		foreach ($status as $key) {
-			$total+=count($key->resumes);
-		}
-		foreach ($status as $key) {
-			$dataset1[] = array(
-				"value"=>(count($key->resumes)/$total) * 100,
-				"color"=>$this->colorState($key->state),
-				"label"=>$key->state." ".round(((count($key->resumes)/$total) * 100),2)."%"
-			);
+		$status = Statusresumes::find()->All();
+		$totalResumes = count(Resumes::find()->all());
+
+		$dataset = [];
+		if($totalResumes != 0){
+			foreach ($status as $key) {
+				$dataset[] = array(
+					"value"=>round((((count($key->resumes)/$totalResumes) * 100)), 2),
+					"color"=>$this->colorState($key->state),
+					"label"=>Yii::t('app',$key->state)
+				);
+			}
 		}
 
-		$criteria=new CDbCriteria;
-        $criteria->distinct = true;
-        $criteria->select = array('region');
-		$regions = Countries::model()->findAll($criteria);
-		$totalCountry = 0;
-		$totalRegion = 0;
-        $dataset2 = array();
-        $labels2 = array();
-		foreach ($regions as $region) {
-			$totalRegion = 0;
-			$countries = Countries::model()->findAll(array('condition'=>'region = "'.$region->region.'"'));
-			foreach ($countries as $country) {
-				$totalCountry = 0;
-				foreach ($country->cities as $city) {
-					$totalCountry+=count($city->resumes);
-				}
-				$totalRegion+=$totalCountry;
-			}
-			$dataset2[]=$totalRegion;
-			$labels2[]=$region->region;
-		}
-		$this->render('statistics',array('dataset1'=>$dataset1,'dataset2'=>$dataset2,'labels2'=>$labels2));
+		return $this->render('statistics',array('dataset'=>$dataset));
 	}
 
 	public function actionTemplates(){
