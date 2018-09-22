@@ -1,3 +1,6 @@
+<?php
+  
+?>
 <div class="panel panel-default">
   <div class="panel-heading"><?php echo Yii::t('app',$this->context->spanState($model->state)) ?>
   	<a class="edit-template" id="<?php echo $model->idStatusResume; ?>"><?php echo Yii::t('app','Edit email template'); ?></a>
@@ -8,7 +11,6 @@
     </div>
     <div class="div-ckeditor hidden">
       <?php echo $this->render('_ckeditor',array('model'=>$model)); ?>
-      <button type="button" class="btn btn-success" data-resume-status-id="<?php echo $model->idStatusResume ?>" ><?php echo Yii::t('app','Save'); ?></button>
     </div>
   </div>
 </div>

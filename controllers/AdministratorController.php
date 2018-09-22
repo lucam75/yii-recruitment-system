@@ -42,7 +42,7 @@ class AdministratorController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			array('allow',
 				'actions'=>array('Changelog','SearchChangelog','Statistics','Templates','CKEditor','SaveTemplate'),
 				'users'=>array('admin'),
 			),
@@ -171,6 +171,22 @@ class AdministratorController extends Controller
 
 	public function actionTemplates(){
 
+		$request = Yii::$app->request;
+		if ($request->isPost){
+			if($request->post('Statusresumes')){
+				$statusResume = Statusresumes::find()->where(['idStatusResume' => $request->post()['Statusresumes']['idStatusResume']])->one();
+				$statusResume->templateEmail = $request->post()['Statusresumes']['templateEmail'];
+				if ($statusResume->validate()) {
+					if(!$statusResume->update()){
+						print_r($statusResume->getErrors());
+					}else{
+						echo "success";
+					}			
+				}else{
+					print_r($statusResume->getErrors());
+				}			
+			}
+		}
 		$query = Statusresumes::find()->where(['!=','idStatusResume','1']);
 		$dataProvider =  new ActiveDataProvider([
 			'query' => $query,
@@ -178,57 +194,9 @@ class AdministratorController extends Controller
             	'pageSize'=>10
 			],
 		]);
-		/*$criteria=new CDbCriteria;
-		$criteria->addCondition('idStatusResume != 1');
-		$status = Statusresumes::model()->findAll($criteria);
-		$dataprovider =  new CArrayDataProvider($status, array(
-	    	'keyField'=>'idStatusResume',
-		    'sort'=>array(
-		    	'defaultOrder'=>'idStatusResume ASC',
-		        'attributes'=>array(
-		            'template'=>array(
-		                'asc'=>'templateEmail asc',
-		                'desc'=>'templateEmail desc',
-		            ),
-	            ),
-            ),
-            'pagination'=>array(
-            	'pageSize'=>10
-			),
-		));*/
 
 		return $this->render("templates",array('dataProvider'=>$dataProvider));
 
-	}
-	public function actionCKEditor(){
-		$model = Statusresumes::model()->findByPk($_POST["idStatusResume"]);
-		$this->renderPartial("ckeditor",array('model'=>$model));
-	}
-	public function actionSaveTemplate(){
-		// SaveTemplate",{idResume:id,Template:template}
-		if(isset($_POST["idStatusResume"]) && isset($_POST["Template"])){
-			$model = Statusresumes::model()->findByPk($_POST["idStatusResume"]);
-			$model->templateEmail = $_POST["Template"];
-			if(!$model->save()){
-				print_r($model->getErrors());
-			}else{
-				echo "success";
-			}
-		}
-	}
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Resumes the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=Resumes::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
 	}
 
 	public function GenerateDataProvider($query){
