@@ -2,6 +2,7 @@
     use yii\bootstrap\ActiveForm;
     use app\models\Statusresumes;
     use kartik\daterange\DateRangePicker;
+    use yii\helpers\Html;
 ?>
 <h2><?php echo Yii::t('app','Archived resumes'); ?></h2>
 
@@ -63,7 +64,7 @@
 
     </div>
     <div class="col-xs-6">
-        <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-default pull-right', 'name'=>'submit-archived']) ?>
+        <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-primary pull-right', 'name'=>'submit-archived']) ?>
     </div>
 </div>
 

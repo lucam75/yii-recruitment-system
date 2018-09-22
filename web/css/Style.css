@@ -9,7 +9,7 @@
 }
 a{
 	cursor: pointer;
-	color: #97c433 !important;
+	color: #97c433;
 	font-weight: bold;
 }
 span, required{
@@ -33,45 +33,33 @@ fieldset legend{
 textarea {
 	resize: none;
 }
-/*.btn-primary {
-  background-image: -webkit-linear-gradient(top, #428bca 0%, #2d6ca2 100%);
-  background-image:         linear-gradient(to bottom, #428bca 0%, #2d6ca2 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  background-repeat: repeat-x;
-  border-color: #2b669a;
-}
-.btn-primary:hover,
-.btn-primary:focus {
-  background-color: #2d6ca2;
-  background-position: 0 -15px;
-}
-.btn-primary:active,
-.btn-primary.active {
-  background-color: #2d6ca2;
-  border-color: #2b669a;
-}*/
 
 #tableDocuments span{
 	color:black;
-}
-.menu li a{
-	color:white;
-	font-weight: lighter;
 }
 .menuV{
 	display:inherit;
 }
 .menuV ul{
 	list-style: none;
+	padding: 0px;
 }
-.menuV a{
-	color:white !important;
-	font-weight: bold;
-}
-
-.menuV a.btn-default{
+div#sidebar.menuV ul li a.btn-default{
 	background-color: black;
 	display: block;
 	text-align: left;
+	font-weight: bold;
+	color: white;
+}
+
+div#sidebar.menuV ul li a.btn-default:hover{
+	background-color: #97c433;
+	color: black;
+}
+
+nav.navbar{
+	margin-bottom: 0px;
+}
+nav.navbar.navbar-inverse a{
+	color:  #97c433;
 }

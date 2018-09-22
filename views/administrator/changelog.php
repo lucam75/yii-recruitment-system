@@ -77,7 +77,7 @@
     <div class="col-xs-4">
         <!-- <input id="filtrar" type="submit" class="crear_boton" value="Filtrar"> -->
         <br />
-        <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-default pull-right', 'name'=>'submit-changelog']) ?>
+        <?= Html::submitButton(Yii::t('app','Search'), ['class' => 'btn btn-primary pull-right', 'name'=>'submit-changelog']) ?>
     </div>
 </div>
 

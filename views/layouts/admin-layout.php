@@ -18,10 +18,10 @@
 	</div>
 	<div class="col-xs-10">
 		<div id="content">
-			<?php echo $content; ?>
+		<?= $content ?>
 		</div><!-- content -->
 	</div>
 </div>
 <?= $this->registerJsFile(Yii::$app->request->BaseUrl . '/js/admin.js', ['depends' => [yii\web\JqueryAsset::className()]]);
  ?>
-<?php $this->endContent(); ?>
+<?= $this->endContent(); ?>

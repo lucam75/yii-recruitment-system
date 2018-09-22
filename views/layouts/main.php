@@ -29,12 +29,19 @@ AppAsset::register($this);
 
 <div class="container-fluid">
     <?= Alert::widget() ?>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
+        <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fa fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
+        <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+            <span class="navbar-brand">Logged user</span>  
+            <a class="navbar-brand" href="#"><i class="fa fa-power-off"></i></a>
+        </div>
+    </nav>
     <div class="body-content">
         <?= $content ?>
     </div>
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+            <p class="pull-left">&copy; Luis M. Campos  <?= date('Y') ?></p>
 
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>
