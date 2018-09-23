@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "139b67715f48fa206b639a57cad53a84",
+    "content-hash": "ac107ac47db87e653a30944e28e6df5b",
     "packages": [
         {
             "name": "2amigos/yii2-chartjs-widget",
@@ -120,6 +120,55 @@
                 "yii2"
             ],
             "time": "2017-06-12T18:51:26+00:00"
+        },
+        {
+            "name": "bizley/migration",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bizley/yii2-migration.git",
+                "reference": "05cf2734f85a38a7fa5920f43bef2f9a87599b6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bizley/yii2-migration/zipball/05cf2734f85a38a7fa5920f43bef2f9a87599b6d",
+                "reference": "05cf2734f85a38a7fa5920f43bef2f9a87599b6d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.1.0",
+                "yiisoft/yii2": ">=2.0.15.1 <2.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~7.3.1",
+                "roave/security-advisories": "dev-master"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bizley\\migration\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Bizley Brzozowski",
+                    "email": "pawel@positive.codes"
+                }
+            ],
+            "description": "Migration generator for Yii 2.",
+            "keywords": [
+                "console",
+                "generator",
+                "migrate",
+                "migration",
+                "yii2"
+            ],
+            "time": "2018-09-10T18:17:44+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
