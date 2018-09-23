@@ -22,7 +22,8 @@
         "kartik-v/yii2-date-range": "*",
         "kartik-v/yii2-mpdf": "dev-master",
         "2amigos/yii2-ckeditor-widget" : "*",
-        "2amigos/yii2-chartjs-widget": "~2.0"
+        "2amigos/yii2-chartjs-widget": "~2.0",
+        "justcoded/yii2-rbac": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

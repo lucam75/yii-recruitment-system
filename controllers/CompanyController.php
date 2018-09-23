@@ -19,32 +19,6 @@ class CompanyController extends Controller
 {
 	public $layout='company-layout';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['ManageResume','ViewSession','PDFSession','PDF','View','Index','Archived','SearchArchived'],
-                        'allow' => true,
-                        'roles' => ['employee'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-	}
-
 	public function actionManageresume(){
 		$request = Yii::$app->request;
 		if ($request->isPost){

@@ -13,6 +13,11 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            // 'class' => 'yii\rbac\DbManager',
+            'class' => 'justcoded\yii2\rbac\components\DbManager',
+            'cache' => 'cache',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'q20zLGvmVUy_6GECalZlw4XZIY22NzfS',
@@ -70,6 +75,20 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         // 'allowedIPs' => ['127.0.0.1', '::1'],
+    ];
+
+    $config['bootstrap'][] = 'rbac';
+    $config['modules']['rbac'] = [
+        'class' => 'justcoded\yii2\rbac\Module',
+        'as access' => [
+            'class' => 'yii\filters\AccessControl',
+            'rules' => [
+                [
+                    'allow' => true,
+                    'roles' => ['Administrator'],
+                ],
+            ],
+        ],
     ];
 }
 
