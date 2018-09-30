@@ -1,13 +1,22 @@
 <?php
 
+namespace app\controllers;
+
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\Response;
+use yii\filters\VerbFilter;
+use app\models\Resumes;
+
 class ResumeController extends Controller
 {
 	public $layout='main';
 
-	public function step1(){
-		//
-		$this->performAjaxValidation(Yii::app()->session['Resume']);
-		echo $this->renderPartial('step1', array('model'=>Yii::app()->session['Resume']));
+	public function actionIndex()
+	{
+		$resume = new Resumes;
+		return $this->render('index', array('model'=>$resume));
 	}
 
 	public function step2(){
@@ -277,10 +286,6 @@ class ResumeController extends Controller
 		}
 	}
 
-	public function actionIndex()
-	{
-		$this->render('index',array());
-	}
 	public function actionCitiesByCountries(){
 
 		$idCountry = $_POST["idCountry"];

@@ -1,12 +1,20 @@
 <?php
-$dataProvider = new CArrayDataProvider(Yii::app()->session[$session], array('keyField'=>'idSection'));
-$this->widget('zii.widgets.CListView', array(
-    'id'=>'clvListSections',
-    'dataProvider'=>$dataProvider,
-    'itemView'=>'_detailSection',
-    'enableSorting'=>false,
-    'enablePagination'=>false,
-    'summaryText'=>'',
-    'emptyText' => '',
-));
+use yii\widgets\ListView;
+use yii\data\ArrayDataProvider;
+use app\models\Resumes;
+
+if(!empty($model)){
+    $dataProvider = new ArrayDataProvider([
+        'allModels' => $model,
+        'pagination' => false,
+    ]);
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemView' => '_detailSection',
+        'summary' => '',
+        'emptyText' => '',
+        'itemOptions' => ['tag'=>false],
+        'options' => ['tag'=>false]
+    ]);
+}
 ?>

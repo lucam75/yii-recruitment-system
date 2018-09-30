@@ -1,3 +1,7 @@
+<?php
+    use yii\helpers\Html;
+?>
+
 <div id="divStep3" style="display:none">
 	<div class="row noSummary">
 		<div class="col-xs-12">
@@ -24,7 +28,7 @@
 		<div class="list-group">
 
 			<div class="list-group" id="listAchievements">
-<?php 		echo $this->renderPartial('_listSections',array('session'=>'Achievements')); ?>
+				<?php echo $this->render('_listSections',array('session'=>'Achievements')); ?>
 			</div>
 
 		</div>
@@ -44,7 +48,7 @@
 		<div class="list-group">
 
 			<div class="list-group" id="listHobbies">
-<?php 		echo $this->renderPartial('_listSections',array('session'=>'Hobbies')); ?>
+				<?php echo $this->render('_listSections',array('session'=>'Hobbies')); ?>
 			</div>
 
 		</div>
@@ -52,21 +56,8 @@
 	</fieldset>
 			<div class="row noSummary" style="margin-top:20px;">
 				<div class="col-xs-12">
-					<?php
-						echo BsHtml::button(Yii::t('app','Next step').' <i class="fa fa-arrow-right"></i>', array(
-						    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-						    'class'=>'pull-right NAVIGABLE',
-						    'style'=>'margin-left:20px',
-						    'to'=>'toStep4',
-						));
-					?>
-					<?php
-						echo BsHtml::button('<i class="fa fa-arrow-left"></i> '.Yii::t('app','Prev step'), array(
-						    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-						    'class'=>'pull-right NAVIGABLE',
-						    'to'=>'toStep2',
-						));
-					?>
+				<?= Html::Button(Yii::t('app','Next').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'value'=>'toStep4']) ?>
+					<?= Html::Button(' <i class="fa fa-arrow-left"></i> '.Yii::t('app','Prev'), ['class' => 'btn btn-primary pull-right NAVIGABLE', 'value'=>'toStep2']) ?>
 				</div>
 			</div>
 		</div>

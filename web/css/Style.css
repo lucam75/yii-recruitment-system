@@ -1,3 +1,4 @@
+body { padding-top: 50px; }
 .background{
 	/*background-color: #e5e5e5;*/
 	background: #ccc url('../images/body-back.png') center;
@@ -62,4 +63,13 @@ nav.navbar{
 }
 nav.navbar.navbar-inverse a{
 	color:  #97c433;
+}
+
+ol.breadcrumb{
+	margin-bottom: 0px;
+}
+
+form div.required label.control-label:after {
+	content:" * ";
+	color:red;
 }

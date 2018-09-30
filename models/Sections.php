@@ -32,7 +32,7 @@ class Sections extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['header', 'description', 'resumes_idResume', 'typeSection_idtypeSection'], 'required'],
+            [['header', 'description', 'resumes_idResume', 'typeSection_idtypeSection', 'idSection'], 'required'],
             [['description'], 'string'],
             [['resumes_idResume', 'typeSection_idtypeSection'], 'integer'],
             [['header'], 'string', 'max' => 100],

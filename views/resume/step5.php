@@ -1,3 +1,6 @@
+<?php
+    use yii\helpers\Html;
+?>
 <div id="divStep5" style="display:none">
 	<div class="row">
 		<div class="col-xs-12"><div class="text-center"><h2><?php echo Yii::t('app','Complementary documents'); ?></h2></div></div>

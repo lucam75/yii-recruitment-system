@@ -85,7 +85,7 @@ class Resumes extends \yii\db\ActiveRecord
             'expectedSalary' => Yii::t('app', 'Expected Salary'),
             'profile' => Yii::t('app', 'Profile'),
             'maritalStatus_idMaritalStatus' => Yii::t('app', 'Marital Status Id Marital Status'),
-            'cities_idCity' => Yii::t('app', 'Cities Id City'),
+            'cities_idCity' => Yii::t('app', 'City'),
             'statusResumes_idStatusResume' => Yii::t('app', 'Status Resumes Id Status Resume'),
         ];
     }

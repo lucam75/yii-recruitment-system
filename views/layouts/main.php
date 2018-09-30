@@ -27,15 +27,19 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="container-fluid">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
-        <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fa fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
-        
-        <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
-            <span class="navbar-brand"><?= !Yii::$app->user->getIsGuest() ? Html::encode(Yii::$app->user->identity->name):'' ?></span>  
-            <?= !Yii::$app->user->getIsGuest() ? Html::a('<i class="fa fa-power-off"></i>', Url::to('@web/site/logout', true), ['class' => 'navbar-brand']): '' ?>
-        </div>
-    </nav>
+<div class="container-fluid background">
+    <div class="row">
+            <nav class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fa fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
+                    
+                    <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+                        <span class="navbar-brand"><?= !Yii::$app->user->getIsGuest() ? Html::encode(Yii::$app->user->identity->name):'' ?></span>  
+                        <?= !Yii::$app->user->getIsGuest() ? Html::a('<i class="fa fa-power-off"></i>', Url::to('@web/site/logout', true), ['class' => 'navbar-brand']): '' ?>
+                    </div>
+                </div>
+            </nav>
+    </div>
     <?= Alert::widget() ?>
     <div class="body-content">
         <?= $content ?>
@@ -48,7 +52,8 @@ AppAsset::register($this);
         </div>
     </footer>
 </div>
-
+<?= $this->registerJsFile(Yii::$app->request->BaseUrl . '/js/script.js', ['depends' => [yii\web\JqueryAsset::className()]]);
+ ?>
 <?php $this->endBody() ?>
 </body>
 </html>

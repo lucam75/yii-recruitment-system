@@ -24,7 +24,9 @@
         "2amigos/yii2-ckeditor-widget" : "*",
         "2amigos/yii2-chartjs-widget": "~2.0",
         "justcoded/yii2-rbac": "*",
-        "bizley/migration": "~3.0.0"
+        "bizley/migration": "~3.0.0",
+        "yiisoft/yii2-jui": "~2.0.0",
+        "wbraganca/yii2-dynamicform": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
