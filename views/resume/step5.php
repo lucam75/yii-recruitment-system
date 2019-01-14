@@ -11,7 +11,6 @@
 <?php
     $form = $this->beginWidget('bootstrap.widgets.BsActiveForm', array(
         'layout' => BsHtml::FORM_LAYOUT_HORIZONTAL,
-        // 'enableAjaxValidation'=>true,
         'enableClientValidation'=>false,
         'action' => 'SaveFiles',
         'clientOptions'=>array(
@@ -26,12 +25,9 @@
         )
     ));
  ?>
-    <?php //echo $form->telFieldControlGroup($model, 'description', array('placeholder' => 'File description')); ?>
-    <?php //echo $form->fileFieldControlGroup($model, 'document', array('placeholder' => 'Document')); ?>
  <?php
     $this->widget('CMultiFileUpload', array(
         'name' => 'document',
-        // 'model'=> $model,
         'id'=>'document',
         'accept' => 'jpeg|jpg|gif|png|pdf|docx|doc', // useful for verifying files
         'duplicate' => Yii::t('app','Duplicate file!'), // useful, i think

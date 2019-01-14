@@ -1,19 +1,6 @@
-<div id="divSummary" style="display:none">
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="progress">
-                <div class="progress-bar progress-bar-success" style="width: 100%"></div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<div class="text-center">
-				<h1><?php echo Yii::t('app','Summary'); ?></h1>
-			</div>
-		</div>
-	</div>
-</div>
+<?php
+    use yii\helpers\Html;
+?>
 
  <div class="modal" id="modalSummary">
   <div class="modal-dialog">
