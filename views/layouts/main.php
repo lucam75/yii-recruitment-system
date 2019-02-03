@@ -31,11 +31,11 @@ AppAsset::register($this);
     <div class="row">
             <nav class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fa fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
+                    <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fas fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
                     
                     <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
                         <span class="navbar-brand"><?= !Yii::$app->user->getIsGuest() ? Html::encode(Yii::$app->user->identity->name):'' ?></span>  
-                        <?= !Yii::$app->user->getIsGuest() ? Html::a('<i class="fa fa-power-off"></i>', Url::to('@web/site/logout', true), ['class' => 'navbar-brand']): '' ?>
+                        <?= !Yii::$app->user->getIsGuest() ? Html::a('<i class="fas fa-power-off"></i>', Url::to('@web/site/logout', true), ['class' => 'navbar-brand']): '' ?>
                     </div>
                 </div>
             </nav>

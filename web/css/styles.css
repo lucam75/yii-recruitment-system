@@ -1,0 +1,129 @@
+html body {
+  height: 100%;
+  padding-top: 50px;
+  /* add sorting icons to gridview sort links */ }
+  html body .warp {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px; }
+    html body .warp .container {
+      padding: 70px 15px 20px; }
+  html body .footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px; }
+  html body .jumbotron {
+    text-align: center;
+    background-color: transparent; }
+    html body .jumbotron .btn {
+      font-size: 21px;
+      padding: 14px 24px; }
+  html body .not-set {
+    color: #c55;
+    font-style: italic; }
+  html body a.asc:after, html body a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px; }
+  html body a.asc:after {
+    content: "\e151"; }
+  html body a.desc:after {
+    content: "\e152"; }
+  html body .sort-numerical a.asc:after {
+    content: "\e153"; }
+  html body .sort-numerical a.desc:after {
+    content: "\e154"; }
+  html body .sort-ordinal a.asc:after {
+    content: "\e155"; }
+  html body .sort-ordinal a.desc:after {
+    content: "\e156"; }
+  html body .grid-view th {
+    white-space: nowrap; }
+  html body .hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999; }
+  html body .error-summary {
+    color: #a94442;
+    background: #f5f5f5;
+    border-left: 3px solid #ddd;
+    padding: 10px 20px;
+    margin: 0 0 15px 0; }
+  html body .nav li form button.logout {
+    padding: 15px;
+    border: none; }
+    html body .nav li form button.logout:focus, html body .nav li form button.logout:hover {
+      text-decoration: none; }
+    html body .nav li form button.logout:focus {
+      outline: none; }
+  html body .background {
+    /*background-color: #e5e5e5;*/
+    background: #999 url("../images/body-back.png") center; }
+  html body .footer {
+    padding-top: 19px;
+    color: #999;
+    border-top: 1px solid #999;
+    margin-top: 15px; }
+  html body a {
+    cursor: pointer;
+    color: #97c433;
+    font-weight: bold; }
+  html body span, html body .required {
+    color: red; }
+  html body fieldset {
+    padding: 20px !important;
+    border: 1px solid #ddd !important; }
+  html body fieldset legend {
+    width: auto;
+    border-bottom: 0;
+    margin: 0;
+    font-weight: bold;
+    padding: 5px;
+    /*font-size: 16px;*/ }
+  html body textarea {
+    resize: none; }
+  html body .no-padding {
+    padding: 0px; }
+  html body #tableDocuments span {
+    color: black; }
+  html body div#sidebar.menuV {
+    display: inherit; }
+    html body div#sidebar.menuV ul {
+      list-style: none;
+      padding: 0px; }
+      html body div#sidebar.menuV ul li a.btn-default {
+        background-color: black;
+        display: block;
+        text-align: left;
+        font-weight: bold;
+        color: white;
+        border-color: black;
+        border-radius: 0px;
+        border-bottom: 1px solid #ddd; }
+        html body div#sidebar.menuV ul li a.btn-default:hover {
+          background-color: #97c433;
+          color: black; }
+  html body nav.navbar {
+    margin-bottom: 0px; }
+    html body nav.navbar.navbar-inverse a {
+      color: #97c433; }
+  html body ol.breadcrumb {
+    margin-bottom: 0px; }
+  html body form div.required label.control-label:after {
+    content: " * ";
+    color: red; }
+@media (max-width: 767px) {
+  html .nav li > form > button.logout {
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 10px 15px; } }
+
+/*# sourceMappingURL=styles.css.map */

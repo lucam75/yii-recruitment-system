@@ -1,7 +1,7 @@
 <?php use yii\widgets\Menu; ?>
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <div class="row">
-	<div class="col-xs-2">
+	<div class="col-xs-2 no-padding">
 		<div id="sidebar" class="btn-group btn-group-vertical menuV hidden-xs">
 		
 		<?php
