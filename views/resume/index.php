@@ -16,13 +16,7 @@
 			<li id="liStepSummary"><a><?php echo Yii::t('app','Summary'); ?></a></li>
 		</ol>
     </div>
-    <div class="col-xs-12">
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                0%
-            </div>
-        </div>
-    </div>
+
     <div class="col-xs-12 summary-element hidden">
 		<div class="text-center"><h2><?php echo Yii::t('app','Summary'); ?></h2></div>
 	</div>
@@ -36,17 +30,15 @@
 	]]); 
 ?>
 <?php echo $this->render('step1', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php //echo $this->render('step2', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php //echo $this->render('step3', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php //echo $this->render('step4', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php echo $this->render('summary', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php echo $this->render('step2', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php echo $this->render('step3', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php echo $this->render('step4', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php //echo $this->render('step5', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
 
+	<div class="row summary-element hidden buttons-bar" style="margin-top:20px;">
 		<div class="col-xs-12">
-            <div class="row summary-element hidden" style="margin-top:20px;">
-                <div class="col-xs-12">
-                    <?= Html::Button(Yii::t('app','Send').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'send']) ?>
-                </div>
-            </div>
+			<?= Html::submitButton(Yii::t('app','Send').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'send']) ?>
 		</div>
+	</div>
 
 <?php ActiveForm::end(); ?>

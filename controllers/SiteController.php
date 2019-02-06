@@ -47,15 +47,7 @@ class SiteController extends Controller
                 Yii::$app->session->setFlash('error', 'Invalid login details.');
             }
         }
-        // display the login form
-        // Yii::app()->session['Resume'] = new Resumes;
-        // Yii::app()->session['Educations'] = array();
-        // Yii::app()->session['Experiences'] = array();
-        // Yii::app()->session['Achievements'] = array();
-        // Yii::app()->session['Hobbies'] = array();
-        // Yii::app()->session['Interests'] = array();
-        // Yii::app()->session['References'] = array();
-        // Yii::app()->session['Documents'] = array();
+        
         return $this->render('index',array('model'=>$model));
     }
 

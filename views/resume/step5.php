@@ -1,7 +1,7 @@
 <?php
     use yii\helpers\Html;
 ?>
-<div id="divStep5" style="display:none">
+<div id="divStep5" style="display:none" class="divStep">
 	<div class="row">
 		<div class="col-xs-12"><div class="text-center"><h2><?php echo Yii::t('app','Complementary documents'); ?></h2></div></div>
 	</div>
@@ -67,7 +67,7 @@
                     </fieldset>
                 </div>
             </div>
-        	<div class="row" style="margin-top:20px;">
+        	<div class="row buttons-bar" style="margin-top:20px;">
         		<div class="col-xs-12">
         			<button class="pull-right btn btn-success" id="SendResume" type="button"><i class="fa fa-floppy-o"></i> <?php echo Yii::t('app','Send') ?></button>
         		</div>

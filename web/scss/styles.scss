@@ -119,6 +119,8 @@ html{
         .background{
             /*background-color: #e5e5e5;*/
             background: $graystandard url('../images/body-back.png') center;
+            min-height: fill-available;
+            min-height: -webkit-fill-available;
         }
         .footer{
             padding-top: 19px;
@@ -130,9 +132,6 @@ html{
             cursor: pointer;
             color: $resalted;
             font-weight: bold;
-        }
-        span, .required{
-            color:red;
         }
         fieldset{
             padding: 20px !important;

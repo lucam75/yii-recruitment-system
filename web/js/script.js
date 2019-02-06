@@ -4,13 +4,13 @@ $(document).ready(function(){
 		var to = $(this).val();
 
 		if(to == "toStep1"){
-			toStep1();
+			toStep(1);
 		}else if(to == "toStep2"){
-			toStep2();
+			toStep(2);
 		}else if(to == "toStep3"){
-			toStep3();
+			toStep(3);
 		}else if(to == "toStep4"){
-			toStep4();
+			toStep(4);
 		}else if(to == "toStepSummary"){
 			toSummary();
 		}
@@ -55,83 +55,23 @@ function AddSectionsHandler(){
 	});
 }
 
-function toStep1(){
-	$("#divStep2").animate({opacity:'0'},"slow");
-	$("#divStep2").hide();
-	$("#divStep3").animate({opacity:'0'},"slow");
-	$("#divStep3").hide();
-	$("#divStep4").animate({opacity:'0'},"slow");
-	$("#divStep4").hide();
-	$("#divStep5").animate({opacity:'0'},"slow");
-	$("#divStep5").hide();
-	$(".noSummary").show();
+function toStep(step){
+	$(".divStep").not("#divStep"+step).animate({opacity:'0'},"slow");
+	$(".divStep").not("#divStep"+step).hide();
+	$(".no-summary-element").show();
 	$("#divSummary").hide();
 
 	$(".form-control").removeAttr("disabled");
-	$("#divStep1").animate({opacity:'1'},"slow");
-	$("#divStep1").show();
+	$("#divStep"+step).animate({opacity:'1'},"slow");
+	$("#divStep"+step).show();
 }
-function toStep2(){
-	//readValuesFromLocalStorage(2);
-	$("#divStep1").animate({opacity:'0'},"slow");
-	$("#divStep1").hide();
-	$("#divStep3").animate({opacity:'0'},"slow");
-	$("#divStep3").hide();
-	$("#divStep4").animate({opacity:'0'},"slow");
-	$("#divStep4").hide();
-	$("#divStep5").animate({opacity:'0'},"slow");
-	$("#divStep5").hide();
-	$(".noSummary").show();
-	$("#divSummary").hide();
 
-	$("#divStep2").animate({opacity:'1'},"slow");
-	$("#divStep2").show();
-}
-function toStep3(){
-	//storeAddedRecords();
-	$("#divStep1").animate({opacity:'0'},"slow");
-	$("#divStep1").hide();
-	$("#divStep2").animate({opacity:'0'},"slow");
-	$("#divStep2").hide();
-	$("#divStep4").animate({opacity:'0'},"slow");
-	$("#divStep4").hide();
-	$("#divStep5").animate({opacity:'0'},"slow");
-	$("#divStep5").hide();
-	$(".noSummary").show();
-	$("#divSummary").hide();
-
-	$("#divStep3").animate({opacity:'1'},"slow");
-	$("#divStep3").show();
-}
-function toStep4(){
-	$("#divStep1").animate({opacity:'0'},"slow");
-	$("#divStep1").hide();
-	$("#divStep2").animate({opacity:'0'},"slow");
-	$("#divStep2").hide();
-	$("#divStep3").animate({opacity:'0'},"slow");
-	$("#divStep3").hide();
-	$("#divStep5").animate({opacity:'0'},"slow");
-	$("#divStep5").hide();
-	$(".noSummary").show();
-	$("#divSummary").hide();
-
-	$("#divStep4").animate({opacity:'1'},"slow");
-	$("#divStep4").show();
-}
 function toSummary(){
 	console.log("to summary");
+	$(".divStep").show().animate({opacity:'1'},"fast");
 	$(".no-summary-element").hide();
 	$(".summary-element").removeClass("hidden");
+	$(".summary-element").show();
 	$(".form-control").attr("disabled","disabled");
 	$("#divSummary").show();
-	$("#divStep1").animate({opacity:'1'},"fast");
-	$("#divStep1").show();
-	/*$("#divStep2").animate({opacity:'1'},"fast");
-	$("#divStep2").show();
-	$("#divStep3").animate({opacity:'1'},"fast");
-	$("#divStep3").show();
-	$("#divStep4").animate({opacity:'1'},"fast");
-	$("#divStep4").show();
-	$("#divStep5").animate({opacity:'1'},"fast");
-	$("#divStep5").show();*/
 }

@@ -65,7 +65,9 @@ html body {
       outline: none; }
   html body .background {
     /*background-color: #e5e5e5;*/
-    background: #999 url("../images/body-back.png") center; }
+    background: #999 url("../images/body-back.png") center;
+    min-height: fill-available;
+    min-height: -webkit-fill-available; }
   html body .footer {
     padding-top: 19px;
     color: #999;
@@ -75,8 +77,6 @@ html body {
     cursor: pointer;
     color: #97c433;
     font-weight: bold; }
-  html body span, html body .required {
-    color: red; }
   html body fieldset {
     padding: 20px !important;
     border: 1px solid #ddd !important; }

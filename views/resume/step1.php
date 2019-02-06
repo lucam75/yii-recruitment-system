@@ -3,7 +3,7 @@
     use app\models\Cities;
     use yii\jui\AutoComplete;
 ?>
-<div id="divStep1">
+<div id="divStep1" class="divStep">
     <div class="row no-summary-element">
         <div class="col-xs-12"><div class="text-center"><h2><?php echo Yii::t('app','Personal and contact information'); ?></h2></div></div>
     </div>
@@ -29,7 +29,7 @@
                 <?php echo $form->field($model, 'email')->input('email', ['placeholder' => Yii::t('app','Email')]); ?>
                 <?php echo $form->field($model, 'phone')->input('phone', ['placeholder' => Yii::t('app','Phone number')]); ?>
                 <?php echo $form->field($model, 'address')->textarea(); ?>
-                <?= $form->field($model,'cities_idCity')->widget(AutoComplete::className(),[
+                <?php /*$form->field($model,'cities_idCity')->widget(AutoComplete::className(),[
                     'name' => 'City',
                     'clientOptions' => [
                         'source' => Cities::find()->select(['name as value', 'name as  label','idCity as id'])->asArray()->all(),
@@ -39,14 +39,13 @@
                     'options' => [
                         'class' => 'form-control',
                         'placeholder' => 'City name'
-                    ]]); ?>
-                <?php
-                ?>
+                    ]]);*/ 
+                    ?>
             </fieldset>
 
-            <div class="row noSummary" style="margin-top:20px;">
+            <div class="row no-summary-element buttons-bar" style="margin-top:20px;">
                 <div class="col-xs-12">
-                    <?= Html::Button(Yii::t('app','Next').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'toStepSummary']) ?>
+                    <?= Html::Button(Yii::t('app','Next').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'toStep2']) ?>
                 </div>
             </div>
         </div>
