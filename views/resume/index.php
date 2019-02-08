@@ -23,21 +23,19 @@
 </div>
 <?php 
 	$form = ActiveForm::begin([
-	'id' => 'resume-form',
-	'class' => 'form-horizontal',
-	'options' => [
-		'enctype' => 'multipart/form-data'
-	]]); 
+		'id' => 'resume-form',
+		'class' => 'form-horizontal'
+		]);
 ?>
 <?php echo $this->render('step1', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php echo $this->render('step2', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php echo $this->render('step3', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
-<?php echo $this->render('step4', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php //echo $this->render('step2', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php //echo $this->render('step3', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
+<?php //echo $this->render('step4', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
 <?php //echo $this->render('step5', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections)); ?>
 
 	<div class="row summary-element hidden buttons-bar" style="margin-top:20px;">
 		<div class="col-xs-12">
-			<?= Html::submitButton(Yii::t('app','Send').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'send']) ?>
+			<?= Html::submitButton(Yii::t('app','Submit').' <i class="fa fa-arrow-right"></i>', ['class' => 'btn btn-primary pull-right NAVIGABLE', 'name'=>'submit-archived', 'value'=>'send']) ?>
 		</div>
 	</div>
 

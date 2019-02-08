@@ -21,15 +21,7 @@
 					<button type="button" class="close" data-dismiss="alert">×</button>
 					<?php echo Yii::t('app','The things that interest you like professional.'); ?>
 				</div>
-				<a class="no-summary-element" id="linkAddNewInterest"><i class="fa fa-plus-square"></i><?php echo " ".Yii::t('app','Add new'); ?></a>
-				<div class="row" style ="margin-top:10px;">
-
-					<div class="list-group">
-						<div class="list-group" id="listInterests">
-							<?php echo $this->render('_listSections',array('session'=>'Interests')); ?>
-						</div>
-					</div>
-				</div>
+				<?php echo $this->render('_multipleItemsForm', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections, 'sectionvalue'=>'4')); ?>
 			</fieldset>
 
 			<fieldset>
@@ -38,18 +30,7 @@
 					<button type="button" class="close" data-dismiss="alert">×</button>
 					<?php echo Yii::t('app','People'); ?>
 				</div>
-				<a class="no-summary-element" id="linkAddNewReference"><i class="fa fa-plus-square"></i><?php echo " ".Yii::t('app','Add new'); ?></a>
-
-				<div class="row" style ="margin-top:10px;">
-
-					<div class="list-group">
-
-						<div class="list-group" id="listReferences">
-							<?php echo $this->render('_listSections',array('session'=>'References')); ?>
-						</div>
-
-					</div>
-				</div>
+				<?php echo $this->render('_multipleItemsForm', array('model'=>$model, 'form'=>$form, 'modelsSections'=>$modelsSections, 'sectionvalue'=>'5')); ?>
 			</fieldset>
 			<div class="row no-summary-element buttons-bar" style="margin-top:20px;">
 				<div class="col-xs-12">

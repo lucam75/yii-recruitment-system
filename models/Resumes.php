@@ -48,7 +48,7 @@ class Resumes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['firstName', 'lastName', 'suffix', 'gender', 'birthday', 'email', 'phone', 'address', 'maritalStatus_idMaritalStatus', 'cities_idCity', 'statusResumes_idStatusResume'], 'required'],
+            [['firstName', 'lastName', 'suffix', 'gender', 'birthday', 'email', 'phone', 'address', 'maritalStatus_idMaritalStatus', 'cities_idCity'], 'required'],
             [['birthday', 'dateApplication'], 'safe'],
             [['expectedSalary'], 'number'],
             [['profile'], 'string'],

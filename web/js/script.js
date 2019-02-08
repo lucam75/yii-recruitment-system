@@ -61,7 +61,7 @@ function toStep(step){
 	$(".no-summary-element").show();
 	$("#divSummary").hide();
 
-	$(".form-control").removeAttr("disabled");
+	//$(".form-control").removeAttr("disabled");
 	$("#divStep"+step).animate({opacity:'1'},"slow");
 	$("#divStep"+step).show();
 }
@@ -72,6 +72,6 @@ function toSummary(){
 	$(".no-summary-element").hide();
 	$(".summary-element").removeClass("hidden");
 	$(".summary-element").show();
-	$(".form-control").attr("disabled","disabled");
+	//$(".form-control").attr("disabled","disabled");
 	$("#divSummary").show();
 }
