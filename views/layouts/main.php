@@ -27,9 +27,9 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="container-fluid background">
+<div class="container-fluid">
     <div class="row">
-            <nav class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
+            <nav id="navbar" class="navbar navbar-fixed-top fixed-top navbar-expand-lg navbar-dark bg-dark navbar-inverse">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="<?= Url::base() ?>"><i class="fas fa-fire"></i> <?= Html::encode(Yii::$app->name) ?></a>
                     

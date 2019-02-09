@@ -4,10 +4,29 @@ $border: #ddd;
 $graystandard: #999;
 $error: #a94442;
 
+$primary-color-dark:   #512DA8;
+$primary-color:        #673AB7;
+$primary-color-light:  #D1C4E9;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #03A9F4;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 html{
     body{
         height: 100%;
         padding-top: 50px;
+        color: $primary-text-color;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+
+        .container-fluid{
+            padding: 0px;
+            margin: 0px;
+        }
 
         .warp{
             min-height: 100%;
@@ -98,7 +117,11 @@ html{
             margin: 0 0 15px 0;
         }
         
-        .nav {
+        .navbar {
+            &#navbar{
+                background-color: $primary-color-dark;
+                padding-left: 10px;
+            }
             li{
                 form{
                     button.logout {
@@ -115,10 +138,21 @@ html{
                 }
             }
         }
+        
+        .primary-title{
+            color: $primary-color-text;
+            font-size: 36px;
+        }
+
+        .secondary-title{
+            color: $primary-color-light;
+            font-size: 24px;
+        }
 
         .background{
             /*background-color: #e5e5e5;*/
-            background: $graystandard url('../images/body-back.png') center;
+            //background: $graystandard url('../images/body-back.png') center;
+            background-color: $primary-color;
             min-height: fill-available;
             min-height: -webkit-fill-available;
         }
@@ -128,10 +162,18 @@ html{
             border-top: 1px solid $graystandard;
             margin-top: 15px;
         }
+
         a{
             cursor: pointer;
-            color: $resalted;
+            //color: $resalted;
             font-weight: bold;
+
+            &.btn{
+                border-radius: 0px;
+                &.btn-success{
+                    background-color: $accent-color;
+                }
+            }
         }
         fieldset{
             padding: 20px !important;
@@ -185,7 +227,7 @@ html{
             margin-bottom: 0px;
             &.navbar-inverse{
                 a{
-                    color:  $resalted;
+                    color:  $primary-color-text;
                 }
             }
         }
@@ -197,6 +239,22 @@ html{
         form div.required label.control-label:after {
             content:" * ";
             color:red;
+        }
+
+        button.btn{
+            border-radius: 0px;
+            &.btn-success{
+                background-color: $accent-color;
+            }
+            &.btn-primary{
+                background-color: $accent-color;
+            }
+        }
+
+        input.form-control, text-area.form-control{
+            border-radius: 0px;
+            background-color: $primary-color-light;
+            color: $secondary-text-color;
         }
     }
 

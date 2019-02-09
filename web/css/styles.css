@@ -1,7 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 html body {
   height: 100%;
   padding-top: 50px;
+  color: #212121;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   /* add sorting icons to gridview sort links */ }
+  html body .container-fluid {
+    padding: 0px;
+    margin: 0px; }
   html body .warp {
     min-height: 100%;
     height: auto;
@@ -56,16 +63,25 @@ html body {
     border-left: 3px solid #ddd;
     padding: 10px 20px;
     margin: 0 0 15px 0; }
-  html body .nav li form button.logout {
+  html body .navbar#navbar {
+    background-color: #512DA8;
+    padding-left: 10px; }
+  html body .navbar li form button.logout {
     padding: 15px;
     border: none; }
-    html body .nav li form button.logout:focus, html body .nav li form button.logout:hover {
+    html body .navbar li form button.logout:focus, html body .navbar li form button.logout:hover {
       text-decoration: none; }
-    html body .nav li form button.logout:focus {
+    html body .navbar li form button.logout:focus {
       outline: none; }
+  html body .primary-title {
+    color: #FFFFFF;
+    font-size: 36px; }
+  html body .secondary-title {
+    color: #D1C4E9;
+    font-size: 24px; }
   html body .background {
     /*background-color: #e5e5e5;*/
-    background: #999 url("../images/body-back.png") center;
+    background-color: #673AB7;
     min-height: fill-available;
     min-height: -webkit-fill-available; }
   html body .footer {
@@ -75,8 +91,11 @@ html body {
     margin-top: 15px; }
   html body a {
     cursor: pointer;
-    color: #97c433;
     font-weight: bold; }
+    html body a.btn {
+      border-radius: 0px; }
+      html body a.btn.btn-success {
+        background-color: #03A9F4; }
   html body fieldset {
     padding: 20px !important;
     border: 1px solid #ddd !important; }
@@ -113,12 +132,22 @@ html body {
   html body nav.navbar {
     margin-bottom: 0px; }
     html body nav.navbar.navbar-inverse a {
-      color: #97c433; }
+      color: #FFFFFF; }
   html body ol.breadcrumb {
     margin-bottom: 0px; }
   html body form div.required label.control-label:after {
     content: " * ";
     color: red; }
+  html body button.btn {
+    border-radius: 0px; }
+    html body button.btn.btn-success {
+      background-color: #03A9F4; }
+    html body button.btn.btn-primary {
+      background-color: #03A9F4; }
+  html body input.form-control, html body text-area.form-control {
+    border-radius: 0px;
+    background-color: #D1C4E9;
+    color: #757575; }
 @media (max-width: 767px) {
   html .nav li > form > button.logout {
     display: block;
